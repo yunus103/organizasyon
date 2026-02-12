@@ -46,6 +46,9 @@ export interface CompanyInfo {
       youtube?: string;
     };
   };
+  aboutImage?: string;
+  aboutImageAlt?: string;
+  aboutContent?: any;
 }
 
 export interface NavItem {

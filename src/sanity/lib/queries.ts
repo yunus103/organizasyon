@@ -16,7 +16,10 @@ export const companyInfoQuery = groq`
         twitter,
         linkedin
       }
-    }
+    },
+    "aboutImage": aboutImage.asset->url,
+    "aboutImageAlt": aboutImage.alt,
+    aboutContent
   }
 `;
 

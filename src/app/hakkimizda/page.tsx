@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="pt-20 lg:pt-32">
-      <AboutSection />
+      <AboutSection showLink={false} />
     </div>
   );
 }

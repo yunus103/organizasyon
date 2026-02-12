@@ -41,5 +41,24 @@ export const companyInfo = defineType({
         })
       ]
     }),
+    defineField({
+      name: 'aboutImage',
+      title: 'About Page Image',
+      type: 'image',
+      options: { hotspot: true },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative Text',
+        }
+      ]
+    }),
+    defineField({
+      name: 'aboutContent',
+      title: 'About Page Content',
+      type: 'array',
+      of: [{ type: 'block' }],
+    }),
   ],
 })

@@ -101,7 +101,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             </div>
 
             <div className="max-w-3xl mx-auto">
-                 <p className="text-xl text-gray-600 leading-relaxed text-center">
+                 <p className="text-xl text-gray-600 leading-relaxed ">
                     {displayProject.description}
                  </p>
                  {/* Imagine more content here if Project interface had 'content' like Service */}

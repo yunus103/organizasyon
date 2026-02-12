@@ -8,7 +8,7 @@ import { Menu, X, Phone, Mail, Instagram, Facebook, Twitter, Linkedin } from "lu
 import { CompanyInfo } from "@/types";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { navItems, companyInfo as mockCompanyInfo } from "@/data/mockData";
+import { navItems } from "@/data/mockData";
 import { cn } from "@/lib/utils";
 
 export function HeaderClient({ companyInfo }: { companyInfo: CompanyInfo }) {
@@ -34,6 +34,7 @@ export function HeaderClient({ companyInfo }: { companyInfo: CompanyInfo }) {
   const phone = companyInfo?.contact?.phone || "";
   const email = companyInfo?.contact?.email || "";
   const name = companyInfo?.name || "";
+  const socials = companyInfo?.contact?.socials;
 
   return (
     <header
@@ -71,12 +72,20 @@ export function HeaderClient({ companyInfo }: { companyInfo: CompanyInfo }) {
              shouldShowSolid ? "border-primary/10" : "border-white/20"
            )}>
               <span className={shouldShowSolid ? "text-primary/60" : "text-white/60"}>Bizi Takip Edin:</span>
-              <div className="flex gap-3">
-                 <Link href="#" className="hover:text-secondary transition-colors"><Instagram size={14}/></Link>
-                 <Link href="#" className="hover:text-secondary transition-colors"><Facebook size={14}/></Link>
-                 <Link href="#" className="hover:text-secondary transition-colors"><Twitter size={14}/></Link>
-                 <Link href="#" className="hover:text-secondary transition-colors"><Linkedin size={14}/></Link>
-              </div>
+               <div className="flex gap-3">
+                  {socials?.instagram && (
+                    <Link href={socials.instagram} target="_blank" className="hover:text-secondary transition-colors"><Instagram size={14}/></Link>
+                  )}
+                  {socials?.facebook && (
+                    <Link href={socials.facebook} target="_blank" className="hover:text-secondary transition-colors"><Facebook size={14}/></Link>
+                  )}
+                  {socials?.twitter && (
+                    <Link href={socials.twitter} target="_blank" className="hover:text-secondary transition-colors"><Twitter size={14}/></Link>
+                  )}
+                  {socials?.linkedin && (
+                    <Link href={socials.linkedin} target="_blank" className="hover:text-secondary transition-colors"><Linkedin size={14}/></Link>
+                  )}
+               </div>
            </div>
         </Container>
       </div>
@@ -183,9 +192,18 @@ export function HeaderClient({ companyInfo }: { companyInfo: CompanyInfo }) {
               </a>
             </div>
              <div className="flex gap-4 mt-6">
-               <Link href="#" className="p-3 bg-muted rounded-full text-primary hover:bg-secondary hover:text-white transition-all"><Instagram size={20}/></Link>
-               <Link href="#" className="p-3 bg-muted rounded-full text-primary hover:bg-secondary hover:text-white transition-all"><Facebook size={20}/></Link>
-               <Link href="#" className="p-3 bg-muted rounded-full text-primary hover:bg-secondary hover:text-white transition-all"><Twitter size={20}/></Link>
+                {socials?.instagram && (
+                  <Link href={socials.instagram} target="_blank" className="p-3 bg-muted rounded-full text-primary hover:bg-secondary hover:text-white transition-all"><Instagram size={20}/></Link>
+                )}
+                {socials?.facebook && (
+                  <Link href={socials.facebook} target="_blank" className="p-3 bg-muted rounded-full text-primary hover:bg-secondary hover:text-white transition-all"><Facebook size={20}/></Link>
+                )}
+                {socials?.twitter && (
+                  <Link href={socials.twitter} target="_blank" className="p-3 bg-muted rounded-full text-primary hover:bg-secondary hover:text-white transition-all"><Twitter size={20}/></Link>
+                )}
+                {socials?.linkedin && (
+                  <Link href={socials.linkedin} target="_blank" className="p-3 bg-muted rounded-full text-primary hover:bg-secondary hover:text-white transition-all"><Linkedin size={20}/></Link>
+                )}
             </div>
           </div>
         </div>
