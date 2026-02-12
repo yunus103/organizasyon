@@ -19,7 +19,9 @@ export const companyInfoQuery = groq`
     },
     "aboutImage": aboutImage.asset->url,
     "aboutImageAlt": aboutImage.alt,
-    aboutContent
+    aboutContent,
+    "logo": logo.asset->url,
+    "logoAlt": logo.alt
   }
 `;
 

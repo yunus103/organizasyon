@@ -49,6 +49,8 @@ export interface CompanyInfo {
   aboutImage?: string;
   aboutImageAlt?: string;
   aboutContent?: any;
+  logo?: string;
+  logoAlt?: string;
 }
 
 export interface NavItem {

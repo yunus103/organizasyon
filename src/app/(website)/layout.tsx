@@ -14,6 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const name = companyInfo?.name || "Organizasyon";
   const tagline = companyInfo?.tagline || "";
   const description = companyInfo?.description || "";
+  const logo = companyInfo?.logo;
 
   return {
     title: {
@@ -21,6 +22,11 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${name}`,
     },
     description: description,
+    icons: logo ? {
+      icon: logo,
+      shortcut: logo,
+      apple: logo,
+    } : undefined,
   };
 }
 
