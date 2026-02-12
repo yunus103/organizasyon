@@ -9,9 +9,18 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { HeroSlide } from "@/types";
 import { heroSlides } from "@/data/mockData";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  slides?: HeroSlide[];
+}
+
+export function HeroSection({ slides = [] }: HeroSectionProps) {
+  if (slides.length === 0) return null;
+
+  const displaySlides = slides;
+
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 5000, stopOnInteraction: false }),
   ]);
@@ -28,7 +37,7 @@ export function HeroSection() {
     <section className="relative w-full h-[100vh] lg:h-[800px] overflow-hidden bg-primary">
       <div className="absolute inset-0" ref={emblaRef}>
         <div className="flex h-full">
-          {heroSlides.map((slide) => (
+          {displaySlides.map((slide) => (
             <div
               key={slide.id}
               className="relative flex-[0_0_100%] h-full min-w-0"
@@ -38,7 +47,7 @@ export function HeroSection() {
                  {/* Using unoptimized for external demo images if domains not configured, but ideally optimized */}
                 <Image
                   src={slide.image}
-                  alt={slide.headline}
+                  alt={slide.imageAlt || slide.headline || "Event background"}
                   fill
                   className="object-cover"
                   priority

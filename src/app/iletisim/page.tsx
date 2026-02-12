@@ -2,7 +2,7 @@ import { ContactSection } from "@/components/sections/ContactSection";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "İletişim | Reel Organizasyon",
+  title: "İletişim",
   description: "Bizimle iletişime geçin.",
 };
 

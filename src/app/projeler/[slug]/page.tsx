@@ -3,25 +3,37 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Calendar, MapPin } from "lucide-react";
 
+import { sanityFetch } from "@/sanity/lib/client";
+import { projectBySlugQuery, projectsQuery } from "@/sanity/lib/queries";
+import { Project } from "@/types";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { projects } from "@/data/mockData";
+import { projects as mockProjects } from "@/data/mockData";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 interface ProjectDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
-  return projects.map((project) => ({
+  const projects = await sanityFetch<Project[]>({ query: projectsQuery, tags: ["project"] });
+  const source = projects.length > 0 ? projects : mockProjects;
+  
+  return source.map((project) => ({
     slug: project.slug,
   }));
 }
 
-export async function generateMetadata({ params: { slug } }: ProjectDetailPageProps) {
-  const project = projects.find((p) => p.slug === slug);
+export async function generateMetadata({ params }: ProjectDetailPageProps) {
+  const { slug } = await params;
+  const project = await sanityFetch<Project>({ 
+    query: projectBySlugQuery, 
+    params: { slug },
+    tags: [`project:${slug}`]
+  });
+
   if (!project) return { title: "Proje Bulunamadı" };
   
   return {
@@ -30,10 +42,18 @@ export async function generateMetadata({ params: { slug } }: ProjectDetailPagePr
   };
 }
 
-export default function ProjectDetailPage({ params: { slug } }: ProjectDetailPageProps) {
-  const project = projects.find((p) => p.slug === slug);
+export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
+  const { slug } = await params;
+  const project = await sanityFetch<Project>({ 
+    query: projectBySlugQuery, 
+    params: { slug },
+    tags: [`project:${slug}`]
+  });
 
-  if (!project) {
+  const mockProject = mockProjects.find((p) => p.slug === slug);
+  const displayProject = project || mockProject;
+
+  if (!displayProject) {
     notFound();
   }
 
@@ -49,21 +69,21 @@ export default function ProjectDetailPage({ params: { slug } }: ProjectDetailPag
         <div className="space-y-12">
             <div className="text-center max-w-4xl mx-auto space-y-4">
                  <span className="inline-block rounded-full bg-secondary/10 px-4 py-1 text-sm font-bold uppercase tracking-wider text-secondary">
-                    {project.category}
+                    {displayProject.category}
                 </span>
-                <h1 className="text-4xl md:text-5xl font-bold font-serif text-primary">{project.title}</h1>
+                <h1 className="text-4xl md:text-5xl font-bold font-serif text-primary">{displayProject.title}</h1>
                 
                 <div className="flex items-center justify-center gap-6 text-muted-foreground pt-2">
-                    {project.date && (
+                    {displayProject.date && (
                         <div className="flex items-center gap-2">
                             <Calendar size={18} />
-                            <span>{project.date}</span>
+                            <span>{displayProject.date}</span>
                         </div>
                     )}
-                    {project.location && (
+                    {displayProject.location && (
                         <div className="flex items-center gap-2">
                             <MapPin size={18} />
-                            <span>{project.location}</span>
+                            <span>{displayProject.location}</span>
                         </div>
                     )}
                 </div>
@@ -72,8 +92,8 @@ export default function ProjectDetailPage({ params: { slug } }: ProjectDetailPag
             {/* Main Image */}
             <div className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                    src={project.coverImage}
-                    alt={project.title}
+                    src={displayProject.coverImage}
+                    alt={displayProject.coverImageAlt || displayProject.title}
                     fill
                     className="object-cover"
                     priority
@@ -82,21 +102,21 @@ export default function ProjectDetailPage({ params: { slug } }: ProjectDetailPag
 
             <div className="max-w-3xl mx-auto">
                  <p className="text-xl text-gray-600 leading-relaxed text-center">
-                    {project.description}
+                    {displayProject.description}
                  </p>
                  {/* Imagine more content here if Project interface had 'content' like Service */}
             </div>
 
             {/* Gallery */}
-            {project.images && project.images.length > 0 && (
+            {displayProject.images && displayProject.images.length > 0 && (
                 <div className="space-y-6">
                     <SectionHeading title="Proje Galeri" center />
                     <div className="grid sm:grid-cols-2 gap-4">
-                        {project.images.map((img, idx) => (
+                        {displayProject.images.map((img, idx) => (
                              <div key={idx} className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow">
                                 <Image
                                     src={img}
-                                    alt={`${project.title} - Fotoğraf ${idx + 1}`}
+                                    alt={`${displayProject.title} - Fotoğraf ${idx + 1}`}
                                     fill
                                     className="object-cover hover:scale-105 transition-transform duration-500"
                                 />

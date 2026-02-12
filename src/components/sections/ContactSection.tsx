@@ -1,12 +1,21 @@
-"use client";
-
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { companyInfo } from "@/data/mockData";
 import { Mail, MapPin, Phone } from "lucide-react";
+import { sanityFetch } from "@/sanity/lib/client";
+import { companyInfoQuery } from "@/sanity/lib/queries";
+import { CompanyInfo } from "@/types";
 
-export function ContactSection() {
+export async function ContactSection() {
+  const companyInfo = await sanityFetch<CompanyInfo>({ 
+    query: companyInfoQuery, 
+    tags: ["companyInfo"] 
+  });
+
+  const phone = companyInfo?.contact?.phone || "";
+  const email = companyInfo?.contact?.email || "";
+  const address = companyInfo?.contact?.address || "";
+
   return (
     <section className="py-16 md:py-24 bg-muted/30" id="iletisim">
       <Container>
@@ -30,7 +39,7 @@ export function ContactSection() {
                         </div>
                         <div>
                             <h4 className="font-bold text-lg">Telefon</h4>
-                            <p className="text-gray-600">{companyInfo.contact.phone}</p>
+                            <p className="text-gray-600">{phone}</p>
                         </div>
                     </div>
                     
@@ -40,7 +49,7 @@ export function ContactSection() {
                         </div>
                         <div>
                             <h4 className="font-bold text-lg">E-posta</h4>
-                            <p className="text-gray-600">{companyInfo.contact.email}</p>
+                            <p className="text-gray-600">{email}</p>
                         </div>
                     </div>
 
@@ -50,7 +59,7 @@ export function ContactSection() {
                         </div>
                         <div>
                             <h4 className="font-bold text-lg">Adres</h4>
-                            <p className="text-gray-600">{companyInfo.contact.address}</p>
+                            <p className="text-gray-600">{address}</p>
                         </div>
                     </div>
                 </div>

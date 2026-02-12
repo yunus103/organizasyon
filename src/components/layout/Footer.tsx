@@ -1,10 +1,23 @@
+import { sanityFetch } from "@/sanity/lib/client";
+import { companyInfoQuery } from "@/sanity/lib/queries";
+import { CompanyInfo } from "@/types";
 import Link from "next/link";
 import { Facebook, Instagram, Linkedin, Twitter, Youtube, Mail, Phone, MapPin } from "lucide-react";
 
 import { Container } from "@/components/ui/Container";
-import { companyInfo, navItems } from "@/data/mockData";
+import { companyInfo as mockCompanyInfo, navItems } from "@/data/mockData";
 
-export function Footer() {
+export async function Footer() {
+  const companyInfo = await sanityFetch<CompanyInfo>({ query: companyInfoQuery, tags: ["companyInfo"] });
+
+  // Safe Accessors
+  const name = companyInfo?.name || "";
+  const description = companyInfo?.description || "";
+  const phone = companyInfo?.contact?.phone || "";
+  const email = companyInfo?.contact?.email || "";
+  const address = companyInfo?.contact?.address || "";
+  const socials = companyInfo?.contact?.socials;
+
   return (
     <footer className="bg-primary text-primary-foreground py-12 border-t border-white/10">
       <Container className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -12,21 +25,24 @@ export function Footer() {
         {/* Brand Column */}
         <div className="space-y-4">
           <Link href="/" className="text-2xl font-bold font-serif">
-            {companyInfo.name}
+            {name}
           </Link>
           <p className="text-gray-300 text-sm max-w-xs block">
-            {companyInfo.description}
+            {description}
           </p>
           <div className="flex gap-4">
              {/* Socials - mapping a bit manually for icons if needed or just use links from data */}
-             {companyInfo.contact.socials.instagram && (
-                <Link href={companyInfo.contact.socials.instagram} className="hover:text-secondary transition-colors"><Instagram size={20}/></Link>
+             {socials?.instagram && (
+                <Link href={socials.instagram} className="hover:text-secondary transition-colors"><Instagram size={20}/></Link>
              )}
-              {companyInfo.contact.socials.facebook && (
-                <Link href={companyInfo.contact.socials.facebook} className="hover:text-secondary transition-colors"><Facebook size={20}/></Link>
+              {socials?.facebook && (
+                <Link href={socials.facebook} className="hover:text-secondary transition-colors"><Facebook size={20}/></Link>
              )}
-             {companyInfo.contact.socials.linkedin && (
-                <Link href={companyInfo.contact.socials.linkedin} className="hover:text-secondary transition-colors"><Linkedin size={20}/></Link>
+             {socials?.linkedin && (
+                <Link href={socials.linkedin} className="hover:text-secondary transition-colors"><Linkedin size={20}/></Link>
+             )}
+              {socials?.twitter && (
+                <Link href={socials.twitter} className="hover:text-secondary transition-colors"><Twitter size={20}/></Link>
              )}
           </div>
         </div>
@@ -62,15 +78,15 @@ export function Footer() {
           <ul className="space-y-3 text-sm text-gray-300">
             <li className="flex items-start gap-3">
               <MapPin className="shrink-0 text-secondary" size={18} />
-              <span>{companyInfo.contact.address}</span>
+              <span>{address}</span>
             </li>
             <li className="flex items-center gap-3">
               <Phone className="shrink-0 text-secondary" size={18} />
-              <a href={`tel:${companyInfo.contact.phone}`} className="hover:text-white">{companyInfo.contact.phone}</a>
+              <a href={`tel:${phone}`} className="hover:text-white">{phone}</a>
             </li>
             <li className="flex items-center gap-3">
               <Mail className="shrink-0 text-secondary" size={18} />
-              <a href={`mailto:${companyInfo.contact.email}`} className="hover:text-white">{companyInfo.contact.email}</a>
+              <a href={`mailto:${email}`} className="hover:text-white">{email}</a>
             </li>
           </ul>
         </div>
@@ -79,7 +95,7 @@ export function Footer() {
       
       <div className="mt-12 pt-8 border-t border-white/10 text-center text-sm text-gray-400">
         <Container>
-          <p>&copy; {new Date().getFullYear()} {companyInfo.name}. Tüm hakları saklıdır.</p>
+          <p>&copy; {new Date().getFullYear()} {name}. Tüm hakları saklıdır.</p>
         </Container>
       </div>
     </footer>

@@ -13,7 +13,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
     <Link href={`/projeler/${project.slug}`} className="group relative block overflow-hidden rounded-xl bg-muted aspect-[4/3]">
       <Image
         src={project.coverImage}
-        alt={project.title}
+        alt={project.coverImageAlt || project.title}
         fill
         className="object-cover transition-transform duration-500 group-hover:scale-110"
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

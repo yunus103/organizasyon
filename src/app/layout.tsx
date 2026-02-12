@@ -3,7 +3,9 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { companyInfo } from "@/data/mockData";
+import { sanityFetch } from "@/sanity/lib/client";
+import { companyInfoQuery } from "@/sanity/lib/queries";
+import { CompanyInfo } from "@/types";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,10 +17,24 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 });
 
-export const metadata: Metadata = {
-  title: companyInfo.name + " | " + companyInfo.tagline,
-  description: companyInfo.description,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const companyInfo = await sanityFetch<CompanyInfo | null>({ 
+    query: companyInfoQuery, 
+    tags: ["companyInfo"] 
+  });
+
+  const name = companyInfo?.name || "Organizasyon";
+  const tagline = companyInfo?.tagline || "";
+  const description = companyInfo?.description || "";
+
+  return {
+    title: {
+      default: tagline ? `${name} | ${tagline}` : name,
+      template: `%s | ${name}`,
+    },
+    description: description,
+  };
+}
 
 export default function RootLayout({
   children,

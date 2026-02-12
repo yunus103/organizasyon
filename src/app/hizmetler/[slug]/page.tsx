@@ -2,27 +2,41 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { PortableText } from "next-sanity";
 
+import { sanityFetch } from "@/sanity/lib/client";
+import { serviceBySlugQuery, servicesQuery } from "@/sanity/lib/queries";
+import { Service } from "@/types";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { services } from "@/data/mockData";
+import { services as mockServices } from "@/data/mockData";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 interface ServiceDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-// Generate static params for SSG
 export async function generateStaticParams() {
-  return services.map((service) => ({
+  const services = await sanityFetch<Service[]>({ query: servicesQuery, tags: ["service"] });
+  // Fallback to mock data if no services found (during setup)
+  const source = services.length > 0 ? services : mockServices;
+  
+  return source.map((service) => ({
     slug: service.slug,
   }));
 }
 
-export async function generateMetadata({ params: { slug } }: ServiceDetailPageProps) {
-  const service = services.find((s) => s.slug === slug);
+export async function generateMetadata({ params }: ServiceDetailPageProps) {
+  const { slug } = await params;
+  const service = await sanityFetch<Service>({ 
+    query: serviceBySlugQuery, 
+    params: { slug },
+    tags: [`service:${slug}`]
+  });
+  
+  // Minimal fallback metadata
   if (!service) return { title: "Hizmet Bulunamadı" };
   
   return {
@@ -31,10 +45,18 @@ export async function generateMetadata({ params: { slug } }: ServiceDetailPagePr
   };
 }
 
-export default function ServiceDetailPage({ params: { slug } }: ServiceDetailPageProps) {
-  const service = services.find((s) => s.slug === slug);
+export default async function ServiceDetailPage({ params }: ServiceDetailPageProps) {
+  const { slug } = await params;
+  const service = await sanityFetch<Service>({ 
+    query: serviceBySlugQuery, 
+    params: { slug },
+    tags: [`service:${slug}`]
+  });
 
-  if (!service) {
+  const mockService = mockServices.find((s) => s.slug === slug);
+  const displayService = service || mockService;
+
+  if (!displayService) {
     notFound();
   }
 
@@ -50,19 +72,24 @@ export default function ServiceDetailPage({ params: { slug } }: ServiceDetailPag
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
             <div className="relative aspect-video lg:aspect-square w-full rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                    src={service.mainImage}
-                    alt={service.title}
+                    src={displayService.mainImage}
+                    alt={displayService.mainImageAlt || displayService.title}
                     fill
                     className="object-cover"
                     priority
                 />
             </div>
             <div className="flex flex-col justify-center">
-                <SectionHeading title={service.title} subtitle="Hizmet Detayları" center={false} />
-                <div 
-                    className="prose prose-lg max-w-none text-gray-600 prose-headings:font-serif prose-headings:text-primary prose-a:text-secondary"
-                    dangerouslySetInnerHTML={{ __html: service.content }} 
-                />
+                <SectionHeading title={displayService.title} subtitle="Hizmet Detayları" center={false} />
+                <div className="prose prose-lg max-w-none text-gray-600 prose-headings:font-serif prose-headings:text-primary prose-a:text-secondary">
+                  {/* Handle both HTML string (mock) and Portable Text (Sanity) */}
+                  {displayService.content && typeof displayService.content === 'string' ? (
+                       <div dangerouslySetInnerHTML={{ __html: displayService.content }} />
+                  ) : (
+                       // @ts-ignore - simple fallback for portable text typing
+                       <PortableText value={displayService.content as any} />
+                  )}
+                </div>
                 
                 <div className="mt-8">
                     <Button asChild size="lg">

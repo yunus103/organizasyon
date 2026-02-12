@@ -1,16 +1,25 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
+import { sanityFetch } from "@/sanity/lib/client";
+import { projectsQuery } from "@/sanity/lib/queries";
+import { Project } from "@/types";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectCard } from "@/components/sections/ProjectCard";
-import { projects } from "@/data/mockData";
+import { projects as mockProjects } from "@/data/mockData";
 
-export function ProjectsSection() {
+export async function ProjectsSection() {
+  const projects = await sanityFetch<Project[]>({ query: projectsQuery, tags: ["project"] });
+
+  if (projects.length === 0) return null;
+
+  const displayProjects = projects;
+  
   // Show only first 3 projects on homepage
-  const featuredProjects = projects.slice(0, 3);
-
+  const featuredProjects = displayProjects.slice(0, 3);
+  
   return (
     <section className="py-16 md:py-24">
       <Container>
@@ -20,7 +29,7 @@ export function ProjectsSection() {
         />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-10">
           {featuredProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
         <div className="text-center">

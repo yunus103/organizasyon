@@ -2,8 +2,8 @@ import { AboutSection } from "@/components/sections/AboutSection";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Hakkımızda | Reel Organizasyon",
-  description: "Reel Organizasyon hakkında detaylı bilgi.",
+  title: "Hakkımızda",
+  description: "Şirketimiz hakkında detaylı bilgi.",
 };
 
 export default function AboutPage() {

@@ -5,7 +5,8 @@ export interface Service {
   shortDescription: string;
   icon?: string;
   mainImage: string;
-  content: string; // HTML content for detail page
+  mainImageAlt?: string;
+  content?: string; // HTML content for detail page
 }
 
 export interface Project {
@@ -14,7 +15,8 @@ export interface Project {
   slug: string;
   category: string;
   coverImage: string;
-  images: string[];
+  coverImageAlt?: string;
+  images?: string[];
   description: string;
   date?: string;
   location?: string;
@@ -56,6 +58,7 @@ export interface HeroSlide {
   headline: string;
   subheadline: string;
   image: string;
+  imageAlt?: string;
   ctaText: string;
   ctaLink: string;
 }
