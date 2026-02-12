@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { sanityFetch } from "@/sanity/lib/client";
-import { companyInfoQuery } from "@/sanity/lib/queries";
-import { CompanyInfo } from "@/types";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,24 +12,10 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const companyInfo = await sanityFetch<CompanyInfo | null>({ 
-    query: companyInfoQuery, 
-    tags: ["companyInfo"] 
-  });
-
-  const name = companyInfo?.name || "Organizasyon";
-  const tagline = companyInfo?.tagline || "";
-  const description = companyInfo?.description || "";
-
-  return {
-    title: {
-      default: tagline ? `${name} | ${tagline}` : name,
-      template: `%s | ${name}`,
-    },
-    description: description,
-  };
-}
+export const metadata: Metadata = {
+  title: "Sanity Admin",
+  description: "Sanity Studio",
+};
 
 export default function RootLayout({
   children,
@@ -46,9 +27,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${playfair.variable} antialiased bg-background text-foreground font-sans`}
       >
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );
