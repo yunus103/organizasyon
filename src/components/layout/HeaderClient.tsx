@@ -18,6 +18,7 @@ export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: Co
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false); // For Desktop Mega Menu
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false); // For Mobile Accordion
+  const [mobileActiveCategory, setMobileActiveCategory] = useState<string | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -234,19 +235,34 @@ export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: Co
                                     Tüm Hizmetler
                                 </Link>
                                 {categories.map((cat) => (
-                                    <div key={cat.id} className="space-y-2">
-                                        <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest">{cat.title}</h4>
-                                        <div className="flex flex-col gap-2 pl-2">
-                                            {cat.services?.map(service => (
-                                                <Link
-                                                    key={service.id}
-                                                    href={`/hizmetler/${service.slug}`}
-                                                    onClick={() => setIsOpen(false)}
-                                                    className="text-primary/80 hover:text-secondary py-1"
-                                                >
-                                                    {service.title}
-                                                </Link>
-                                            ))}
+                                    <div key={cat.id} className="space-y-2 border-b border-primary/5 pb-2 last:border-0 last:pb-0">
+                                        <button 
+                                            onClick={() => setMobileActiveCategory(mobileActiveCategory === cat.id ? null : cat.id)}
+                                            className="flex items-center justify-between w-full text-left text-sm font-bold text-primary/60 uppercase tracking-widest py-2"
+                                        >
+                                            <span className="flex-1 pr-4">{cat.title}</span>
+                                            <ChevronDown size={14} className={cn("transition-transform duration-300 shrink-0", mobileActiveCategory === cat.id ? "rotate-180" : "")} />
+                                        </button>
+                                        
+                                        <div className={cn(
+                                            "grid transition-all duration-300 overflow-hidden",
+                                            mobileActiveCategory === cat.id ? "grid-rows-[1fr] opacity-100 mb-2" : "grid-rows-[0fr] opacity-0"
+                                        )}>
+                                            <div className="min-h-0 flex flex-col gap-3 pl-4 border-l border-secondary/20">
+                                                {cat.services?.map(service => (
+                                                    <Link
+                                                        key={service.id}
+                                                        href={`/hizmetler/${service.slug}`}
+                                                        onClick={() => setIsOpen(false)}
+                                                        className="text-primary/70 hover:text-secondary text-[15px] font-medium transition-colors"
+                                                    >
+                                                        • {service.title}
+                                                    </Link>
+                                                ))}
+                                                {(!cat.services || cat.services.length === 0) && (
+                                                    <span className="text-xs text-muted-foreground italic pl-2">Henüz hizmet eklenmemiş</span>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
