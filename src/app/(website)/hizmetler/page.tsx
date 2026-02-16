@@ -1,10 +1,9 @@
 import { sanityFetch } from "@/sanity/lib/client";
-import { servicesQuery } from "@/sanity/lib/queries";
-import { Service } from "@/types";
+import { paginatedServicesQuery, categoriesQuery } from "@/sanity/lib/queries";
+import { Service, Category } from "@/types";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ServiceCard } from "@/components/sections/ServiceCard";
-import { services as mockServices } from "@/data/mockData";
+import { ServicesFeed } from "@/components/sections/ServicesFeed";
+import { PageHero } from "@/components/layout/PageHero";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,35 +11,40 @@ export const metadata: Metadata = {
   description: "Sunduğumuz profesyonel organizasyon hizmetleri.",
 };
 
+// Revalidate every hour
+export const revalidate = 3600;
+
 export default async function ServicesPage() {
-  const services = await sanityFetch<Service[]>({ query: servicesQuery, tags: ["service"] });
-
-  if (services.length === 0) {
-    return (
-      <div className="pt-32 pb-24 text-center">
-        <Container>
-           <h1 className="text-3xl font-bold">Henüz hizmet eklenmemiş.</h1>
-           <p className="text-muted-foreground mt-4">Lütfen daha sonra tekrar kontrol ediniz.</p>
-        </Container>
-      </div>
-    );
-  }
-
-  const displayServices = services;
+  // Fetch categories for tabs
+  const categories = await sanityFetch<Category[]>({ query: categoriesQuery, tags: ["category"] });
+  
+  // Fetch initial services (first 12)
+  const initialServices = await sanityFetch<Service[]>({ 
+    query: paginatedServicesQuery, 
+    params: { category: null, start: 0, end: 11 },
+    tags: ["service"] 
+  });
 
   return (
-    <div className="pt-20 lg:pt-32 pb-16 md:pb-24">
-      <Container>
-        <SectionHeading
-          title="Tüm Hizmetlerimiz"
-          subtitle="Sizin İçin Neler Yapabiliriz?"
-        />
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {displayServices.map((service) => (
-            <ServiceCard key={service.id} service={service} />
-          ))}
-        </div>
-      </Container>
-    </div>
+    <>
+      <PageHero 
+        title="Hizmetlerimiz" 
+        breadcrumbs={[{ label: "Hizmetler" }]} 
+      />
+      
+      <div className="pb-16 md:pb-24 -mt-8 relative z-20">
+        <Container>
+          <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-12">
+             <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-12">
+                İhtiyacınız olan organizasyon türünü seçerek ilgili hizmetlerimize göz atabilirsiniz.
+             </p>
+             <ServicesFeed 
+                initialServices={initialServices} 
+                categories={categories} 
+             />
+          </div>
+        </Container>
+      </div>
+    </>
   );
 }

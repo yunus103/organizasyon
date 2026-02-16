@@ -4,6 +4,7 @@ import { Project } from "@/types";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectCard } from "@/components/sections/ProjectCard";
+import { PageHero } from "@/components/layout/PageHero";
 import { projects as mockProjects } from "@/data/mockData";
 import type { Metadata } from "next";
 
@@ -29,18 +30,24 @@ export default async function ProjectsPage() {
   const displayProjects = projects;
 
   return (
-    <div className="pt-20 lg:pt-32 pb-16 md:pb-24">
-      <Container>
-        <SectionHeading
-          title="Tüm Projelerimiz"
-          subtitle="Başarı Hikayelerimiz"
-        />
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {displayProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-      </Container>
-    </div>
+    <>
+      <PageHero 
+        title="Projelerimiz" 
+        breadcrumbs={[{ label: "Projeler" }]} 
+      />
+      <div className="pb-16 md:pb-24">
+        <Container>
+          <SectionHeading
+            title="Tüm Projelerimiz"
+            subtitle="Başarı Hikayelerimiz"
+          />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {displayProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        </Container>
+      </div>
+    </>
   );
 }

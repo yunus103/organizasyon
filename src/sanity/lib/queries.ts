@@ -64,6 +64,19 @@ export const serviceBySlugQuery = groq`
   }
 `;
 
+export const paginatedServicesQuery = groq`
+  *[_type == "service" && ($category == null || references(*[_type == "category" && slug.current == $category]._id))] | order(order asc) [ $start .. $end ] {
+    "id": _id,
+    title,
+    "slug": slug.current,
+    shortDescription,
+    icon,
+    "mainImage": mainImage.asset->url,
+    "mainImageAlt": mainImage.alt,
+    category->
+  }
+`;
+
 // Projects
 export const projectsQuery = groq`
   *[_type == "project"] | order(date desc) {

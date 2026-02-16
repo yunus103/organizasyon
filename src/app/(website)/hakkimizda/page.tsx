@@ -1,4 +1,5 @@
 import { AboutSection } from "@/components/sections/AboutSection";
+import { PageHero } from "@/components/layout/PageHero";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,8 +9,12 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="pt-20 lg:pt-32">
+    <>
+      <PageHero 
+        title="Hakkımızda" 
+        breadcrumbs={[{ label: "Hakkımızda" }]} 
+      />
       <AboutSection showLink={false} />
-    </div>
+    </>
   );
 }

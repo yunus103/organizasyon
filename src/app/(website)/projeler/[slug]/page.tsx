@@ -10,6 +10,7 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { projects as mockProjects } from "@/data/mockData";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { PageHero } from "@/components/layout/PageHero";
 
 interface ProjectDetailPageProps {
   params: Promise<{
@@ -58,14 +59,15 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   }
 
   return (
-    <article className="pt-20 lg:pt-32 pb-16 md:pb-24">
-      <Container>
-        <div className="mb-8">
-            <Button asChild variant="ghost" className="pl-0 hover:pl-2 transition-all">
-                <Link href="/projeler" className="gap-2 text-muted-foreground"><ArrowLeft size={16}/> Tüm Projelere Dön</Link>
-            </Button>
-        </div>
-
+    <article className="pb-16 md:pb-24">
+      <PageHero 
+        title={displayProject.title} 
+        breadcrumbs={[
+            { label: "Projeler", href: "/projeler" },
+            { label: displayProject.title }
+        ]} 
+      />
+      <Container className="mt-12">
         <div className="space-y-12">
             <div className="text-center max-w-4xl mx-auto space-y-4">
                  <span className="inline-block rounded-full bg-secondary/10 px-4 py-1 text-sm font-bold uppercase tracking-wider text-secondary">

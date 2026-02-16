@@ -11,6 +11,7 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { services as mockServices } from "@/data/mockData";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { PageHero } from "@/components/layout/PageHero";
 
 interface ServiceDetailPageProps {
   params: Promise<{
@@ -61,14 +62,15 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
   }
 
   return (
-    <article className="pt-20 lg:pt-32 pb-16 md:pb-24">
-      <Container>
-        <div className="mb-8">
-            <Button asChild variant="ghost" className="pl-0 hover:pl-2 transition-all">
-                <Link href="/hizmetler" className="gap-2 text-muted-foreground"><ArrowLeft size={16}/> Tüm Hizmetlere Dön</Link>
-            </Button>
-        </div>
-
+    <article className="pb-16 md:pb-24">
+      <PageHero 
+        title={displayService.title} 
+        breadcrumbs={[
+            { label: "Hizmetler", href: "/hizmetler" },
+            { label: displayService.title }
+        ]} 
+      />
+      <Container className="mt-12">
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
             <div className="relative aspect-video lg:aspect-square w-full rounded-2xl overflow-hidden shadow-xl bg-muted">
                 {displayService.mainImage ? (
