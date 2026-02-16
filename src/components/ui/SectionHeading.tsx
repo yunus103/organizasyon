@@ -14,18 +14,18 @@ export function SectionHeading({
   center = true,
 }: SectionHeadingProps) {
   return (
-    <div className={cn("mb-12 space-y-2", center && "text-center", className)}>
+    <div className={cn("mb-16 space-y-4", center && "text-center", className)}>
       {subtitle && (
-        <span className="block text-sm font-bold uppercase tracking-wider text-secondary">
+        <span className="block text-sm font-bold uppercase tracking-widest text-secondary/90 animate-in fade-in slide-in-from-bottom-2 duration-500">
           {subtitle}
         </span>
       )}
-      <h2 className="text-3xl font-bold font-serif md:text-4xl text-primary">
+      <h2 className="text-4xl md:text-5xl font-bold font-serif text-primary leading-tight drop-shadow-sm animate-in fade-in slide-in-from-bottom-3 duration-700 delay-100">
         {title}
       </h2>
       <div
         className={cn(
-          "h-1 w-20 bg-secondary mt-4 rounded-full",
+          "h-1.5 w-24 bg-gradient-to-r from-secondary to-secondary/60 mt-6 rounded-full animate-in zoom-in duration-500 delay-200",
           center ? "mx-auto" : ""
         )}
       />

@@ -70,14 +70,22 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
-            <div className="relative aspect-video lg:aspect-square w-full rounded-2xl overflow-hidden shadow-xl">
-                <Image
-                    src={displayService.mainImage}
-                    alt={displayService.mainImageAlt || displayService.title}
-                    fill
-                    className="object-cover"
-                    priority
-                />
+            <div className="relative aspect-video lg:aspect-square w-full rounded-2xl overflow-hidden shadow-xl bg-muted">
+                {displayService.mainImage ? (
+                    <Image
+                        src={displayService.mainImage}
+                        alt={displayService.mainImageAlt || displayService.title}
+                        fill
+                        className="object-cover"
+                        priority
+                    />
+                ) : (
+                    <div className="absolute inset-0 flex items-center justify-center bg-primary/5">
+                        <span className="text-secondary/20 font-serif font-bold text-6xl transform -rotate-12 italic select-none text-center px-4">
+                            {displayService.title}
+                        </span>
+                    </div>
+                )}
             </div>
             <div className="flex flex-col justify-center">
                 <SectionHeading title={displayService.title} subtitle="Hizmet Detayları" center={false} />

@@ -1,3 +1,11 @@
+export interface Category {
+  id: string;
+  title: string;
+  slug: string;
+  description?: string;
+  services?: Service[];
+}
+
 export interface Service {
   id: string;
   title: string;
@@ -7,6 +15,7 @@ export interface Service {
   mainImage: string;
   mainImageAlt?: string;
   content?: string; // HTML content for detail page
+  category?: Category;
 }
 
 export interface Project {

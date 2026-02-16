@@ -1,10 +1,14 @@
 import { sanityFetch } from "@/sanity/lib/client";
-import { companyInfoQuery } from "@/sanity/lib/queries";
-import { CompanyInfo } from "@/types";
+import { companyInfoQuery, categoriesQuery } from "@/sanity/lib/queries";
+import { CompanyInfo, Category } from "@/types";
 import { HeaderClient } from "./HeaderClient";
 
 export async function Header() {
-  const companyInfo = await sanityFetch<CompanyInfo>({ query: companyInfoQuery, tags: ["companyInfo"] });
-  return <HeaderClient companyInfo={companyInfo} />;
+  const [companyInfo, categories] = await Promise.all([
+    sanityFetch<CompanyInfo>({ query: companyInfoQuery, tags: ["companyInfo"] }),
+    sanityFetch<Category[]>({ query: categoriesQuery, tags: ["category", "service"] })
+  ]);
+
+  return <HeaderClient companyInfo={companyInfo} categories={categories} />;
 }
 

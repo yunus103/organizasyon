@@ -3,17 +3,21 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, Mail, Instagram, Facebook, Twitter, Linkedin } from "lucide-react";
+import Image from "next/image";
+import { Menu, X, Phone, Mail, Instagram, Facebook, Twitter, Linkedin, ChevronDown } from "lucide-react";
 
-import { CompanyInfo } from "@/types";
+import { CompanyInfo, Category } from "@/types";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { navItems } from "@/data/mockData";
 import { cn } from "@/lib/utils";
+import { MegaMenu } from "@/components/layout/MegaMenu";
 
-export function HeaderClient({ companyInfo }: { companyInfo: CompanyInfo }) {
+export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: CompanyInfo, categories?: Category[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false); // For Desktop Mega Menu
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false); // For Mobile Accordion
   const pathname = usePathname();
 
   useEffect(() => {
@@ -26,6 +30,8 @@ export function HeaderClient({ companyInfo }: { companyInfo: CompanyInfo }) {
 
   useEffect(() => {
     setIsOpen(false);
+    setIsServicesOpen(false);
+    setMobileServicesOpen(false);
   }, [pathname]);
 
   const isHomePage = pathname === "/";
@@ -37,13 +43,15 @@ export function HeaderClient({ companyInfo }: { companyInfo: CompanyInfo }) {
   const socials = companyInfo?.contact?.socials;
 
   return (
+    <>
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500",
         shouldShowSolid 
-          ? "bg-white/95 backdrop-blur-md shadow-lg py-2" 
-          : "bg-transparent py-4"
+          ? "bg-white/95 backdrop-blur-md shadow-lg py-2 lg:py-4" 
+          : "bg-transparent py-4 lg:py-6"
       )}
+      onMouseLeave={() => setIsServicesOpen(false)}
     >
       <div 
         className={cn(
@@ -93,32 +101,59 @@ export function HeaderClient({ companyInfo }: { companyInfo: CompanyInfo }) {
       <Container className="flex items-center justify-between">
         <Link 
           href="/" 
-          className={cn(
-            "text-xl md:text-2xl font-bold font-serif tracking-tighter transition-colors duration-500",
-            shouldShowSolid ? "text-primary" : "text-white"
-          )}
+          className="flex items-center gap-2 group z-50 relative"
         >
-          {name.toUpperCase()}
+          {companyInfo?.logo ? (
+             <div className="relative h-10 w-40 md:h-12 md:w-48 lg:h-16 lg:w-56 transition-all duration-300">
+                <Image 
+                   src={companyInfo.logo} 
+                   alt={companyInfo.logoAlt || name} 
+                   fill 
+                   className="object-contain object-left"
+                   sizes="(max-width: 768px) 160px, 224px"
+                   priority
+                />
+             </div>
+          ) : (
+            <span className={cn(
+              "text-xl md:text-2xl font-bold font-serif tracking-tighter transition-colors duration-500",
+              shouldShowSolid ? "text-primary" : "text-white"
+            )}>
+              {name.toUpperCase()}
+            </span>
+          )}
         </Link>
         
         <nav className="hidden lg:flex items-center gap-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "text-[13px] uppercase tracking-widest font-bold transition-all duration-300 hover:text-secondary relative group",
-                shouldShowSolid ? "text-primary/80" : "text-white/90",
-                pathname === item.href && "text-secondary"
-              )}
-            >
-              {item.label}
-              <span className={cn(
-                "absolute -bottom-1 left-0 h-0.5 bg-secondary transition-all duration-300",
-                pathname === item.href ? "w-full" : "w-0 group-hover:w-full"
-              )} />
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isServices = item.label === "Hizmetler";
+            return (
+              <div 
+                key={item.href} 
+                className="relative group h-full flex items-center"
+                onMouseEnter={() => isServices && setIsServicesOpen(true)}
+              >
+                <Link
+                  href={item.href}
+                  className={cn(
+                    "text-[13px] uppercase tracking-widest font-bold transition-all duration-300 hover:text-secondary relative flex items-center gap-1 py-4",
+                    shouldShowSolid ? "text-primary/80" : "text-white/90",
+                    pathname === item.href && "text-secondary"
+                  )}
+                >
+                  {item.label}
+                  {isServices && <ChevronDown size={14} className={cn("transition-transform duration-300", isServicesOpen ? "rotate-180" : "")} />}
+                  <span className={cn(
+                    "absolute bottom-2 left-0 h-0.5 bg-secondary transition-all duration-300",
+                    pathname === item.href ? "w-full" : "w-0 group-hover:w-full"
+                  )} />
+                </Link>
+                
+                 {/* Mega Menu Overlay Trigger */}
+                {isServices && <div className="absolute top-full left-0 w-full h-4 bg-transparent" />}
+              </div>
+            );
+          })}
           <Button 
             asChild 
             className={cn(
@@ -143,6 +178,15 @@ export function HeaderClient({ companyInfo }: { companyInfo: CompanyInfo }) {
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </Container>
+      
+      {/* Desktop Mega Menu */}
+      <div 
+        className="hidden lg:block absolute top-full left-0 w-full"
+        onMouseEnter={() => setIsServicesOpen(true)}
+        onMouseLeave={() => setIsServicesOpen(false)}
+      >
+        <MegaMenu categories={categories} isOpen={isServicesOpen} onClose={() => setIsServicesOpen(false)} />
+      </div>
 
       <div 
         className={cn(
@@ -157,24 +201,77 @@ export function HeaderClient({ companyInfo }: { companyInfo: CompanyInfo }) {
               "text-2xl font-bold font-serif transition-colors border-b border-muted pb-4",
               pathname === "/" ? "text-secondary" : "text-primary"
             )}
+            onClick={() => setIsOpen(false)}
           >
             Ana Sayfa
           </Link>
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "text-2xl font-bold font-serif transition-colors border-b border-muted pb-4",
-                pathname === item.href ? "text-secondary" : "text-primary"
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+             if (item.label === "Hizmetler") {
+                 return (
+                    <div key={item.href} className="border-b border-muted pb-4">
+                        <button 
+                            onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                            className={cn(
+                                "flex items-center justify-between w-full text-2xl font-bold font-serif transition-colors",
+                                pathname.startsWith("/hizmetler") ? "text-secondary" : "text-primary"
+                            )}
+                        >
+                            {item.label}
+                            <ChevronDown size={20} className={cn("transition-transform duration-300", mobileServicesOpen ? "rotate-180" : "")} />
+                        </button>
+                        
+                        {/* Mobile Accordion */}
+                        <div className={cn(
+                            "grid transition-all duration-300 overflow-hidden",
+                            mobileServicesOpen ? "grid-rows-[1fr] opacity-100 mt-4" : "grid-rows-[0fr] opacity-0"
+                        )}>
+                            <div className="min-h-0 space-y-4 pl-4 border-l-2 border-secondary/20">
+                                <Link 
+                                    href="/hizmetler"
+                                    onClick={() => setIsOpen(false)}
+                                    className="block text-lg font-medium text-secondary"
+                                >
+                                    Tüm Hizmetler
+                                </Link>
+                                {categories.map((cat) => (
+                                    <div key={cat.id} className="space-y-2">
+                                        <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest">{cat.title}</h4>
+                                        <div className="flex flex-col gap-2 pl-2">
+                                            {cat.services?.map(service => (
+                                                <Link
+                                                    key={service.id}
+                                                    href={`/hizmetler/${service.slug}`}
+                                                    onClick={() => setIsOpen(false)}
+                                                    className="text-primary/80 hover:text-secondary py-1"
+                                                >
+                                                    {service.title}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                 )
+             }
+             return (
+                <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                    "text-2xl font-bold font-serif transition-colors border-b border-muted pb-4",
+                    pathname === item.href ? "text-secondary" : "text-primary"
+                )}
+                onClick={() => setIsOpen(false)}
+                >
+                {item.label}
+                </Link>
+             )
+          })}
         </nav>
         
-        <div className="mt-12 space-y-8">
+        <div className="mt-12 space-y-8 pb-10">
           <Button asChild className="w-full py-7 text-lg rounded-xl bg-secondary">
             <Link href="/iletisim">Teklif Alın</Link>
           </Button>
@@ -209,5 +306,6 @@ export function HeaderClient({ companyInfo }: { companyInfo: CompanyInfo }) {
         </div>
       </div>
     </header>
+    </>
   );
 }

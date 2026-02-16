@@ -90,14 +90,23 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             </div>
 
             {/* Main Image */}
-            <div className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-2xl">
-                <Image
-                    src={displayProject.coverImage}
-                    alt={displayProject.coverImageAlt || displayProject.title}
-                    fill
-                    className="object-cover"
-                    priority
-                />
+            <div className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-2xl bg-muted">
+                {displayProject.coverImage ? (
+                    <Image
+                        src={displayProject.coverImage}
+                        alt={displayProject.coverImageAlt || displayProject.title}
+                        fill
+                        className="object-cover"
+                        priority
+                    />
+                ) : (
+                    <div className="absolute inset-0 flex items-center justify-center bg-primary">
+                        <span className="text-secondary/10 font-serif font-bold text-8xl transform -rotate-12 italic select-none">
+                            {displayProject.title}
+                        </span>
+                        <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent" />
+                    </div>
+                )}
             </div>
 
             <div className="max-w-3xl mx-auto">
@@ -113,13 +122,21 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                     <SectionHeading title="Proje Galeri" center />
                     <div className="grid sm:grid-cols-2 gap-4">
                         {displayProject.images.map((img, idx) => (
-                             <div key={idx} className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                                <Image
-                                    src={img}
-                                    alt={`${displayProject.title} - Fotoğraf ${idx + 1}`}
-                                    fill
-                                    className="object-cover hover:scale-105 transition-transform duration-500"
-                                />
+                             <div key={idx} className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow bg-muted">
+                                {img ? (
+                                    <Image
+                                        src={img}
+                                        alt={`${displayProject.title} - Fotoğraf ${idx + 1}`}
+                                        fill
+                                        className="object-cover hover:scale-105 transition-transform duration-500"
+                                    />
+                                ) : (
+                                    <div className="absolute inset-0 flex items-center justify-center bg-primary/5">
+                                        <span className="text-secondary/10 font-serif font-bold text-2xl tracking-widest uppercase">
+                                            {displayProject.category}
+                                        </span>
+                                    </div>
+                                )}
                              </div>
                         ))}
                     </div>

@@ -92,3 +92,20 @@ export const projectBySlugQuery = groq`
     date
   }
 `;
+
+// Categories with Services (Mega Menu)
+export const categoriesQuery = groq`
+  *[_type == "category"] {
+    "id": _id,
+    title,
+    "slug": slug.current,
+    description,
+    "services": *[_type == "service" && references(^._id)] {
+      "id": _id,
+      title,
+      "slug": slug.current,
+      shortDescription,
+      "mainImage": mainImage.asset->url
+    }
+  }
+`;

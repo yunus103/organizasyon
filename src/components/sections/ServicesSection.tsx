@@ -14,7 +14,7 @@ export async function ServicesSection() {
   const displayServices = services;
   
   return (
-    <section className="py-16 md:py-24 bg-muted/30">
+    <section className="py-20 md:py-32 bg-gradient-to-b from-white to-muted/20">
       <Container>
         <SectionHeading
           title="Hizmetlerimiz"

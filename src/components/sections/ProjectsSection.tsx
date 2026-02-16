@@ -21,7 +21,8 @@ export async function ProjectsSection() {
   const featuredProjects = displayProjects.slice(0, 3);
   
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-20 md:py-32 bg-background relative">
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
       <Container>
         <SectionHeading
           title="Projelerimiz"
