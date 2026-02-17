@@ -34,7 +34,7 @@ export function HeroSection({ slides = [] }: HeroSectionProps) {
   }, [emblaApi]);
 
   return (
-    <section className="relative w-full h-[100vh] lg:h-[800px] overflow-hidden bg-primary">
+    <section className="relative w-full h-[100vh] overflow-hidden bg-primary">
       <div className="absolute inset-0" ref={emblaRef}>
         <div className="flex h-full">
           {displaySlides.map((slide) => (

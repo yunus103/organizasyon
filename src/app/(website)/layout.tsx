@@ -30,16 +30,27 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function WebsiteLayout({
+import { FloatingContact } from "@/components/layout/FloatingContact";
+
+export default async function WebsiteLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const companyInfo = await sanityFetch<CompanyInfo | null>({ 
+    query: companyInfoQuery, 
+    tags: ["companyInfo"] 
+  });
+
   return (
     <>
       <Header />
       <main className="min-h-screen">{children}</main>
       <Footer />
+      <FloatingContact 
+        phone={companyInfo?.contact?.phone} 
+        whatsapp={companyInfo?.contact?.whatsapp} 
+      />
     </>
   );
 }

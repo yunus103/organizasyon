@@ -48,6 +48,7 @@ export interface CompanyInfo {
   description: string;
   contact: {
     phone: string;
+    whatsapp?: string;
     email: string;
     address: string;
     socials: {

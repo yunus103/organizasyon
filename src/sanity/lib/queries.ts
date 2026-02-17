@@ -8,6 +8,7 @@ export const companyInfoQuery = groq`
     description,
     contact {
       phone,
+      whatsapp,
       email,
       address,
       socials {
