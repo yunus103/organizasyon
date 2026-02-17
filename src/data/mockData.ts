@@ -3,7 +3,8 @@ import { CompanyInfo, HeroSlide, Project, Service, Testimonial } from "@/types";
 export const companyInfo: CompanyInfo = {
   name: "Organizasyon",
   tagline: "Siz Hayal Edin, Biz Gerçekleştirelim!",
-  description: "Reel Organizasyon; düğün, nişan, kurumsal etkinlikler, mezuniyet törenleri ve özel günler için yaratıcı, profesyonel ve eksiksiz organizasyon hizmeti sunar.",
+  description:
+    "Reel Organizasyon; düğün, nişan, kurumsal etkinlikler, mezuniyet törenleri ve özel günler için yaratıcı, profesyonel ve eksiksiz organizasyon hizmeti sunar.",
   contact: {
     phone: "0555 555 5555",
     email: "info@organizasyon.com",
@@ -23,7 +24,7 @@ export const heroSlides: HeroSlide[] = [
     id: "1",
     headline: "Siz Hayal Edin, Biz Gerçekleştirelim!",
     subheadline: "Profesyonel ekibimizle en özel günlerinizde yanınızdayız.",
-    image: "https://picsum.photos/1920/1080?random=1", 
+    image: "https://picsum.photos/1920/1080?random=1",
     ctaText: "TEKLİF ALIN",
     ctaLink: "/iletisim",
   },
@@ -42,7 +43,8 @@ export const services: Service[] = [
     id: "1",
     title: "Düğün Organizasyonu",
     slug: "dugun-organizasyonu",
-    shortDescription: "Hayallerinizdeki düğünü gerçeğe dönüştürüyoruz. Mekan süslemesinden müzik seçimine kadar her detayla ilgileniyoruz.",
+    shortDescription:
+      "Hayallerinizdeki düğünü gerçeğe dönüştürüyoruz. Mekan süslemesinden müzik seçimine kadar her detayla ilgileniyoruz.",
     mainImage: "https://picsum.photos/800/600?random=3",
     content: `
       <h1>Düğün Organizasyonu</h1>
@@ -62,7 +64,8 @@ export const services: Service[] = [
     id: "2",
     title: "Kurumsal Etkinlikler",
     slug: "kurumsal-etkinlikler",
-    shortDescription: "Şirket yemekleri, lansmanlar, toplantılar ve bayi etkinlikleri için profesyonel çözümler.",
+    shortDescription:
+      "Şirket yemekleri, lansmanlar, toplantılar ve bayi etkinlikleri için profesyonel çözümler.",
     mainImage: "https://picsum.photos/800/600?random=4",
     content: `
       <h1>Kurumsal Etkinlikler</h1>
@@ -75,7 +78,8 @@ export const services: Service[] = [
     id: "3",
     title: "Nişan Organizasyonu",
     slug: "nisan-organizasyonu",
-    shortDescription: "Evliliğe atılan ilk adımda yanınızdayız. Size özel nişan konseptleri hazırlıyoruz.",
+    shortDescription:
+      "Evliliğe atılan ilk adımda yanınızdayız. Size özel nişan konseptleri hazırlıyoruz.",
     mainImage: "https://picsum.photos/800/600?random=5",
     content: `
       <h1>Nişan Organizasyonu</h1>
@@ -86,7 +90,8 @@ export const services: Service[] = [
     id: "4",
     title: "Mezuniyet Törenleri",
     slug: "mezuniyet-torenleri",
-    shortDescription: "Öğrencilerin bu mutlu gününde, kep atma töreninden eğlenceye kadar her şeyi planlıyoruz.",
+    shortDescription:
+      "Öğrencilerin bu mutlu gününde, kep atma töreninden eğlenceye kadar her şeyi planlıyoruz.",
     mainImage: "https://picsum.photos/800/600?random=6",
     content: `
       <h1>Mezuniyet Törenleri</h1>
@@ -97,7 +102,8 @@ export const services: Service[] = [
     id: "5",
     title: "Açılış Organizasyonları",
     slug: "acilis-organizasyonlari",
-    shortDescription: "İş yerinizin açılışında ses getirecek, dikkat çekici organizasyonlar.",
+    shortDescription:
+      "İş yerinizin açılışında ses getirecek, dikkat çekici organizasyonlar.",
     mainImage: "https://picsum.photos/800/600?random=7",
     content: `
       <h1>Açılış Organizasyonları</h1>
@@ -108,7 +114,8 @@ export const services: Service[] = [
     id: "6",
     title: "Doğum Günü Partileri",
     slug: "dogum-gunu-partileri",
-    shortDescription: "Hem çocuklar hem de yetişkinler için konsept doğum günü partileri.",
+    shortDescription:
+      "Hem çocuklar hem de yetişkinler için konsept doğum günü partileri.",
     mainImage: "https://picsum.photos/800/600?random=8",
     content: `
       <h1>Doğum Günü Partileri</h1>
@@ -128,7 +135,8 @@ export const projects: Project[] = [
       "https://picsum.photos/800/600?random=10",
       "https://picsum.photos/800/600?random=11",
     ],
-    description: "Doğa ile iç içe, rüya gibi bir kır düğünü organizasyonu gerçekleştirdik.",
+    description:
+      "Doğa ile iç içe, rüya gibi bir kır düğünü organizasyonu gerçekleştirdik.",
     date: "2023-09-15",
     location: "İstanbul, Büyükada",
   },
@@ -142,7 +150,8 @@ export const projects: Project[] = [
       "https://picsum.photos/800/600?random=13",
       "https://picsum.photos/800/600?random=14",
     ],
-    description: "Sektörün önde gelen isimlerini bir araya getirdiğimiz teknoloji zirvesi.",
+    description:
+      "Sektörün önde gelen isimlerini bir araya getirdiğimiz teknoloji zirvesi.",
     date: "2023-11-20",
     location: "İstanbul, Kongre Merkezi",
   },
@@ -152,9 +161,7 @@ export const projects: Project[] = [
     slug: "bogazda-nisan-toreni",
     category: "Nişan",
     coverImage: "https://picsum.photos/800/600?random=15",
-    images: [
-      "https://picsum.photos/800/600?random=16",
-    ],
+    images: ["https://picsum.photos/800/600?random=16"],
     description: "İstanbul Boğazı manzaralı, nezih bir nişan töreni.",
     date: "2023-08-05",
     location: "İstanbul, Sarıyer",
@@ -164,6 +171,6 @@ export const projects: Project[] = [
 export const navItems = [
   { label: "Kurumsal", href: "/hakkimizda" },
   { label: "Hizmetler", href: "/hizmetler" },
-  { label: "Projeler", href: "/projeler" },
+  { label: "Etkinliklerimiz", href: "/etkinliklerimiz" },
   { label: "İletişim", href: "/iletisim" },
 ];

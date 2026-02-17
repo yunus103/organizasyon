@@ -25,8 +25,8 @@ export async function ProjectsSection() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
       <Container>
         <SectionHeading
-          title="Projelerimiz"
-          subtitle="İmzamızı Attığımız İşler"
+          title="Etkinliklerimiz"
+          subtitle="Unutulmaz Anlar Yaratıyoruz"
         />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-10">
           {featuredProjects.map((project) => (
@@ -35,7 +35,7 @@ export async function ProjectsSection() {
         </div>
         <div className="text-center">
             <Button asChild size="lg" variant="outline">
-                <Link href="/projeler" className="gap-2">Tüm Projeleri Gör <ArrowRight size={16}/></Link>
+                <Link href="/etkinliklerimiz" className="gap-2">Tüm Etkinlikleri Gör <ArrowRight size={16}/></Link>
             </Button>
         </div>
       </Container>

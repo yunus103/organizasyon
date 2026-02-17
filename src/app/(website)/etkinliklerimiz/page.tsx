@@ -9,8 +9,8 @@ import { projects as mockProjects } from "@/data/mockData";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Projelerimiz",
-  description: "Geçmişte gerçekleştirdiğimiz başarılı organizasyon projelerimiz.",
+  title: "Etkinliklerimiz",
+  description: "Gerçekleştirdiğimiz unutulmaz etkinliklerimiz.",
 };
 
 export default async function ProjectsPage() {
@@ -20,8 +20,8 @@ export default async function ProjectsPage() {
     return (
       <div className="pt-32 pb-24 text-center">
         <Container>
-           <h1 className="text-3xl font-bold">Henüz proje eklenmemiş.</h1>
-           <p className="text-muted-foreground mt-4">Kısa süre içinde projelerimiz burada yer alacak.</p>
+           <h1 className="text-3xl font-bold">Henüz etkinlik eklenmemiş.</h1>
+           <p className="text-muted-foreground mt-4">Kısa süre içinde etkinliklerimiz burada yer alacak.</p>
         </Container>
       </div>
     );
@@ -32,14 +32,14 @@ export default async function ProjectsPage() {
   return (
     <>
       <PageHero 
-        title="Projelerimiz" 
-        breadcrumbs={[{ label: "Projeler" }]} 
+        title="Etkinliklerimiz" 
+        breadcrumbs={[{ label: "Etkinliklerimiz" }]} 
       />
       <div className="pb-16 md:pb-24">
         <Container>
           <SectionHeading
-            title="Tüm Projelerimiz"
-            subtitle="Başarı Hikayelerimiz"
+            title="Tüm Etkinliklerimiz"
+            subtitle="Mutlu Anlar, Unutulmaz Anılar"
           />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {displayProjects.map((project) => (

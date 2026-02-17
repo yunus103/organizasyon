@@ -10,7 +10,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Link href={`/projeler/${project.slug}`} className="group relative block overflow-hidden rounded-2xl bg-muted aspect-[4/3] shadow-lg hover:shadow-2xl transition-all duration-500">
+    <Link href={`/etkinliklerimiz/${project.slug}`} className="group relative block overflow-hidden rounded-2xl bg-muted aspect-[4/3] shadow-lg hover:shadow-2xl transition-all duration-500">
       {project.coverImage ? (
         <>
           <Image

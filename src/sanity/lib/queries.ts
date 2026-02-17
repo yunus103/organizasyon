@@ -89,7 +89,8 @@ export const projectsQuery = groq`
     "coverImage": coverImage.asset->url,
     "coverImageAlt": coverImage.alt,
     location,
-    date
+    date,
+    description
   }
 `;
 
@@ -103,6 +104,12 @@ export const projectBySlugQuery = groq`
     "coverImageAlt": coverImage.alt,
     "images": images[].asset->url,
     description,
+    details,
+    "services": services[]->{
+      _id,
+      title,
+      "slug": slug.current
+    },
     location,
     date
   }

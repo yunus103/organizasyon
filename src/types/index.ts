@@ -20,6 +20,7 @@ export interface Service {
 
 export interface Project {
   id: string;
+  _id?: string;
   title: string;
   slug: string;
   category: string;
@@ -27,6 +28,8 @@ export interface Project {
   coverImageAlt?: string;
   images?: string[];
   description: string;
+  details?: any; // Portable Text
+  services?: Service[];
   date?: string;
   location?: string;
 }

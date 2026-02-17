@@ -1,75 +1,92 @@
-import { defineField, defineType } from 'sanity'
+import { defineField, defineType } from "sanity";
 
 export const project = defineType({
-  name: 'project',
-  title: 'Project',
-  type: 'document',
+  name: "project",
+  title: "Etkinlikler",
+  type: "document",
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
+      name: "title",
+      title: "Etkinlik Başlığı",
+      type: "string",
     }),
     defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
+      name: "slug",
+      title: "Slug",
+      type: "slug",
       options: {
-        source: 'title',
+        source: "title",
         maxLength: 96,
       },
     }),
     defineField({
-      name: 'category',
-      title: 'Category',
-      type: 'string',
+      name: "category",
+      title: "Kategori",
+      type: "string",
       options: {
         list: [
-            { title: 'Düğün', value: 'Düğün' },
-            { title: 'Nişan', value: 'Nişan' },
-            { title: 'Kurumsal', value: 'Kurumsal' },
-            { title: 'Mezuniyet', value: 'Mezuniyet' },
-            { title: 'Doğum Günü', value: 'Doğum Günü' },
-            { title: 'Diğer', value: 'Diğer' },
-        ]
-      }
+          { title: "Düğün", value: "Düğün" },
+          { title: "Nişan", value: "Nişan" },
+          { title: "Kurumsal", value: "Kurumsal" },
+          { title: "Mezuniyet", value: "Mezuniyet" },
+          { title: "Doğum Günü", value: "Doğum Günü" },
+          { title: "Parti/Kutlama", value: "Parti" },
+          { title: "Diğer", value: "Diğer" },
+        ],
+      },
     }),
     defineField({
-      name: 'coverImage',
-      title: 'Cover Image',
-      type: 'image',
+      name: "coverImage",
+      title: "Kapak Görseli",
+      type: "image",
       options: {
         hotspot: true,
       },
       fields: [
         {
-          name: 'alt',
-          type: 'string',
-          title: 'Alternative Text',
-          description: 'Required for accessibility and SEO.',
-        }
-      ]
+          name: "alt",
+          type: "string",
+          title: "Alternatif Metin",
+          description: "Erişilebilirlik ve SEO için gereklidir.",
+        },
+      ],
     }),
     defineField({
-      name: 'images',
-      title: 'Gallery Images',
-      type: 'array',
-      of: [{ type: 'image', options: { hotspot: true } }],
+      name: "images",
+      title: "Galeri Görselleri",
+      type: "array",
+      of: [{ type: "image", options: { hotspot: true } }],
     }),
     defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'text',
+      name: "description",
+      title: "Kısa Açıklama",
+      description: "Kartlarda ve özet alanlarında görünecek kısa açıklama.",
+      type: "text",
+      rows: 3,
     }),
     defineField({
-      name: 'date',
-      title: 'Date',
-      type: 'date',
+      name: "details",
+      title: "Detaylı Açıklama",
+      description: "Etkinlik detay sayfasında görünecek zengin metin içeriği.",
+      type: "array",
+      of: [{ type: "block" }],
     }),
     defineField({
-      name: 'location',
-      title: 'Location',
-      type: 'string',
+      name: "services",
+      title: "İlgili Hizmetler",
+      description: "Bu etkinlikte kullanılan veya ilişkili hizmetleri seçin.",
+      type: "array",
+      of: [{ type: "reference", to: { type: "service" } }],
+    }),
+    defineField({
+      name: "date",
+      title: "Tarih",
+      type: "date",
+    }),
+    defineField({
+      name: "location",
+      title: "Konum",
+      type: "string",
     }),
   ],
-})
+});
