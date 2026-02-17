@@ -32,9 +32,9 @@ export default async function ServicesPage() {
         breadcrumbs={[{ label: "Hizmetler" }]} 
       />
       
-      <div className="pb-16 md:pb-24 -mt-8 relative z-20">
+      <div className="pb-16 md:pb-24 md:-mt-8 relative z-20">
         <Container>
-          <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-12">
+          <div className="bg-white rounded-3xl shadow-xl px-2 py-8 md:p-12 mb-12">
              <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-12">
                 İhtiyacınız olan organizasyon türünü seçerek ilgili hizmetlerimize göz atabilirsiniz.
              </p>

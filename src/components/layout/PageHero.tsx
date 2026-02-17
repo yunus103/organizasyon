@@ -19,7 +19,7 @@ interface PageHeroProps {
 
 export function PageHero({ title, breadcrumbs }: PageHeroProps) {
   return (
-    <section className="relative h-[35vh] min-h-[280px] lg:h-[45vh] flex items-center overflow-hidden bg-primary pt-16">
+    <section className="relative min-h-[320px] lg:min-h-[400px] flex items-center overflow-hidden bg-primary pt-26 pb-6">
       {/* Dynamic Animated Gradient Background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[#0a0a0b]" />
@@ -51,36 +51,31 @@ export function PageHero({ title, breadcrumbs }: PageHeroProps) {
         
         {/* Grain/Texture for premium feel */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-
-        {/* Geometric Accent */}
-        <div className="absolute right-0 top-0 h-full w-1/3 bg-white/5 skew-x-[-15deg] translate-x-1/2" />
       </div>
 
       <Container className="relative z-10 w-full">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 pt-8">
+        <div className="flex flex-col gap-10 pt-8">
           {/* Title Area */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-2xl"
+            className="max-w-4xl"
           >
-            <span className="inline-block text-secondary font-bold text-[10px] uppercase tracking-[0.4em] mb-4 opacity-80">
-                Keşfedin
-            </span>
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif font-bold text-white tracking-tight leading-none">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight leading-[1.15] md:leading-[1.1]">
               {title}
             </h1>
           </motion.div>
 
           {/* Breadcrumbs Pill */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="self-start"
           >
-            <nav className="inline-flex items-center bg-white/5 backdrop-blur-xl px-6 py-3 rounded-2xl border border-white/10 shadow-2xl">
-              <ul className="flex items-center gap-3 text-[11px] font-bold tracking-widest uppercase">
+            <nav className="inline-flex bg-white/5 backdrop-blur-xl px-4 py-2 md:px-6 md:py-3 rounded-2xl border border-white/10 shadow-2xl">
+              <ul className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[10px] md:text-[11px] font-bold tracking-widest uppercase">
                 <li>
                   <Link href="/" className="text-white/40 hover:text-secondary transition-colors flex items-center gap-1.5 group">
                     <Home size={12} className="group-hover:scale-110 transition-transform" />
@@ -93,7 +88,7 @@ export function PageHero({ title, breadcrumbs }: PageHeroProps) {
                     <li className="text-white/20">
                       <ChevronRight size={10} />
                     </li>
-                    <li>
+                    <li className="max-w-[200px] sm:max-w-[400px] md:max-w-none">
                       {crumb.href ? (
                         <Link 
                           href={crumb.href} 
@@ -102,7 +97,7 @@ export function PageHero({ title, breadcrumbs }: PageHeroProps) {
                           {crumb.label}
                         </Link>
                       ) : (
-                        <span className="text-white underline underline-offset-8 decoration-secondary/50 decoration-2">{crumb.label}</span>
+                        <span className="text-white border-b border-secondary pb-0.5">{crumb.label}</span>
                       )}
                     </li>
                   </React.Fragment>

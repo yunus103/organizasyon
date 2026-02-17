@@ -73,7 +73,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                  <span className="inline-block rounded-full bg-secondary/10 px-4 py-1 text-sm font-bold uppercase tracking-wider text-secondary">
                     {displayProject.category}
                 </span>
-                <h1 className="text-4xl md:text-5xl font-bold font-serif text-primary">{displayProject.title}</h1>
+                <h1 className="text-3xl md:text-5xl font-bold font-serif text-primary leading-[1.2] md:leading-tight">{displayProject.title}</h1>
                 
                 <div className="flex items-center justify-center gap-6 text-muted-foreground pt-2">
                     {displayProject.date && (

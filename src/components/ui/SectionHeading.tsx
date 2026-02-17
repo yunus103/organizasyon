@@ -20,7 +20,7 @@ export function SectionHeading({
           {subtitle}
         </span>
       )}
-      <h2 className="text-4xl md:text-5xl font-bold font-serif text-primary leading-tight drop-shadow-sm animate-in fade-in slide-in-from-bottom-3 duration-700 delay-100">
+      <h2 className="text-3xl md:text-5xl font-bold font-serif text-primary leading-tight drop-shadow-sm animate-in fade-in slide-in-from-bottom-3 duration-700 delay-100">
         {title}
       </h2>
       <div

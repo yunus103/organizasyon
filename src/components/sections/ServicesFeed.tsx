@@ -70,7 +70,7 @@ export function ServicesFeed({ initialServices, categories }: ServicesFeedProps)
   return (
     <div className="space-y-12">
       {/* Tabs */}
-      <Container>
+      <div className="w-full">
          <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-12">
             <button
                 onClick={() => handleCategoryChange("all")}
@@ -108,11 +108,11 @@ export function ServicesFeed({ initialServices, categories }: ServicesFeedProps)
                 </button>
             ))}
          </div>
-      </Container>
+      </div>
       
       {/* Grid */}
-      <Container>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="w-full">
+          <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <AnimatePresence mode="popLayout" initial={false}>
                 {services.map((service) => (
                     <ServiceCard key={service.id} service={service} />
@@ -149,7 +149,7 @@ export function ServicesFeed({ initialServices, categories }: ServicesFeedProps)
                   <p className="text-xs text-muted-foreground uppercase tracking-widest opacity-50">Tüm hizmetler görüntülendi</p>
               ) : null}
           </div>
-      </Container>
+      </div>
     </div>
   );
 }

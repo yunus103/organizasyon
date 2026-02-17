@@ -49,8 +49,8 @@ export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: Co
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500",
         shouldShowSolid 
-          ? "bg-white/95 backdrop-blur-md shadow-lg py-2 lg:py-4" 
-          : "bg-transparent py-4 lg:py-6"
+          ? "bg-white/95 backdrop-blur-md shadow-lg py-2 lg:py-1" 
+          : "bg-transparent py-4 lg:py-2"
       )}
       onMouseLeave={() => setIsServicesOpen(false)}
     >
@@ -105,19 +105,22 @@ export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: Co
           className="flex items-center gap-2 group z-50 relative"
         >
           {companyInfo?.logo ? (
-             <div className="relative h-10 w-40 md:h-12 md:w-48 lg:h-16 lg:w-56 transition-all duration-300">
+             <div className="relative h-14 w-52 md:h-16 md:w-64 lg:h-24 lg:w-80 transition-all duration-300">
                 <Image 
                    src={companyInfo.logo} 
                    alt={companyInfo.logoAlt || name} 
                    fill 
-                   className="object-contain object-left"
-                   sizes="(max-width: 768px) 160px, 224px"
+                   className={cn(
+                     "object-contain object-left transition-all duration-500",
+                     !shouldShowSolid && !isOpen && "brightness-0 invert opacity-90"
+                   )}
+                   sizes="(max-width: 768px) 208px, (max-width: 1024px) 256px, 320px"
                    priority
                 />
              </div>
           ) : (
             <span className={cn(
-              "text-xl md:text-2xl font-bold font-serif tracking-tighter transition-colors duration-500",
+              "text-2xl md:text-3xl font-bold font-serif tracking-tighter transition-colors duration-500",
               shouldShowSolid ? "text-primary" : "text-white"
             )}>
               {name.toUpperCase()}
@@ -137,7 +140,7 @@ export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: Co
                 <Link
                   href={item.href}
                   className={cn(
-                    "text-[13px] uppercase tracking-widest font-bold transition-all duration-300 hover:text-secondary relative flex items-center gap-1 py-4",
+                    "text-[13px] uppercase tracking-widest font-bold transition-all duration-300 hover:text-secondary relative flex items-center gap-1 py-1",
                     shouldShowSolid ? "text-primary/80" : "text-white/90",
                     pathname === item.href && "text-secondary"
                   )}
@@ -145,13 +148,13 @@ export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: Co
                   {item.label}
                   {isServices && <ChevronDown size={14} className={cn("transition-transform duration-300", isServicesOpen ? "rotate-180" : "")} />}
                   <span className={cn(
-                    "absolute bottom-2 left-0 h-0.5 bg-secondary transition-all duration-300",
+                    "absolute bottom-0 left-0 h-0.5 bg-secondary transition-all duration-300",
                     pathname === item.href ? "w-full" : "w-0 group-hover:w-full"
                   )} />
                 </Link>
                 
                  {/* Mega Menu Overlay Trigger */}
-                {isServices && <div className="absolute top-full left-0 w-full h-4 bg-transparent" />}
+                {isServices && <div className="absolute top-full left-0 w-full h-1 bg-transparent" />}
               </div>
             );
           })}

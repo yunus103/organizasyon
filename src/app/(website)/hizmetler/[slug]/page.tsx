@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/Button";
 import { services as mockServices } from "@/data/mockData";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PageHero } from "@/components/layout/PageHero";
+import { ServiceSidebar } from "@/components/layout/ServiceSidebar";
 
 interface ServiceDetailPageProps {
   params: Promise<{
@@ -57,6 +58,11 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
   const mockService = mockServices.find((s) => s.slug === slug);
   const displayService = service || mockService;
 
+  const allServices = await sanityFetch<Service[]>({ 
+      query: servicesQuery, 
+      tags: ["service"] 
+  });
+
   if (!displayService) {
     notFound();
   }
@@ -71,40 +77,67 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
         ]} 
       />
       <Container className="mt-12">
-        <div className="grid lg:grid-cols-2 gap-12 mb-16">
-            <div className="relative aspect-video lg:aspect-square w-full rounded-2xl overflow-hidden shadow-xl bg-muted">
-                {displayService.mainImage ? (
-                    <Image
-                        src={displayService.mainImage}
-                        alt={displayService.mainImageAlt || displayService.title}
-                        fill
-                        className="object-cover"
-                        priority
-                    />
-                ) : (
-                    <div className="absolute inset-0 flex items-center justify-center bg-primary/5">
-                        <span className="text-secondary/20 font-serif font-bold text-6xl transform -rotate-12 italic select-none text-center px-4">
-                            {displayService.title}
-                        </span>
-                    </div>
-                )}
-            </div>
-            <div className="flex flex-col justify-center">
-                <SectionHeading title={displayService.title} subtitle="Hizmet Detayları" center={false} />
-                <div className="prose prose-lg max-w-none text-gray-600 prose-headings:font-serif prose-headings:text-primary prose-a:text-secondary">
-                  {/* Handle both HTML string (mock) and Portable Text (Sanity) */}
-                  {displayService.content && typeof displayService.content === 'string' ? (
-                       <div dangerouslySetInnerHTML={{ __html: displayService.content }} />
-                  ) : (
-                       // @ts-ignore - simple fallback for portable text typing
-                       <PortableText value={displayService.content as any} />
-                  )}
+        <div className="grid lg:grid-cols-12 gap-12">
+            {/* Main Content */}
+            <div className="lg:col-span-8 space-y-8">
+                {/* Main Image */}
+                <div className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-xl bg-muted">
+                    {displayService.mainImage ? (
+                        <Image
+                            src={displayService.mainImage}
+                            alt={displayService.mainImageAlt || displayService.title}
+                            fill
+                            className="object-cover"
+                            priority
+                        />
+                    ) : (
+                        <div className="absolute inset-0 flex items-center justify-center bg-primary/5">
+                            <h1 className="text-3xl md:text-5xl font-bold font-serif text-primary leading-tight text-center px-4">{displayService.title}</h1>
+                        </div>
+                    )}
                 </div>
-                
-                <div className="mt-8">
-                    <Button asChild size="lg">
-                        <Link href="/iletisim">Hemen Teklif Alın</Link>
-                    </Button>
+
+                {/* Content */}
+                <div>
+                    <h1 className="text-3xl md:text-4xl font-bold font-serif text-primary mb-6">{displayService.title}</h1>
+                    <div className="prose prose-lg max-w-none text-gray-600 prose-headings:font-serif prose-headings:text-primary prose-a:text-secondary">
+                        {/* Handle both HTML string (mock) and Portable Text (Sanity) */}
+                        {displayService.content && typeof displayService.content === 'string' ? (
+                            <div dangerouslySetInnerHTML={{ __html: displayService.content }} />
+                        ) : (
+                            <PortableText 
+                                // @ts-ignore - simple fallback for portable text typing
+                                value={displayService.content as any} 
+                                components={{
+                                    block: {
+                                        h1: ({children}) => <h1 className="text-3xl font-bold font-serif text-primary mt-8 mb-4">{children}</h1>,
+                                        h2: ({children}) => <h2 className="text-2xl font-bold font-serif text-primary mt-8 mb-4">{children}</h2>,
+                                        h3: ({children}) => <h3 className="text-xl font-bold font-serif text-primary mt-6 mb-3">{children}</h3>,
+                                        normal: ({children}) => <p className="mb-4 leading-relaxed">{children}</p>,
+                                    },
+                                    list: {
+                                        bullet: ({children}) => <ul className="list-disc pl-5 mb-4 space-y-2">{children}</ul>,
+                                        number: ({children}) => <ol className="list-decimal pl-5 mb-4 space-y-2">{children}</ol>,
+                                    },
+                                    marks: {
+                                        strong: ({children}) => <strong className="font-bold text-primary">{children}</strong>,
+                                        link: ({children, value}) => (
+                                            <a href={value?.href} target="_blank" rel="noopener noreferrer" className="text-secondary hover:underline font-medium">
+                                                {children}
+                                            </a>
+                                        ),
+                                    }
+                                }}
+                            />
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            {/* Sidebar (Desktop Only) */}
+            <div className="hidden lg:block lg:col-span-4 pl-8 border-l border-gray-100">
+                <div className="sticky top-24">
+                   <ServiceSidebar services={allServices} currentSlug={slug} />
                 </div>
             </div>
         </div>
