@@ -68,5 +68,17 @@ export const service = defineType({
       to: [{ type: "category" }],
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: "showOnHome",
+      title: "Show on Homepage",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
+      name: "order",
+      title: "Display Order",
+      type: "number",
+      initialValue: 0,
+    }),
   ],
 });

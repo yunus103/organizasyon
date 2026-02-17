@@ -40,14 +40,16 @@ export const heroSlidesQuery = groq`
 
 // Services
 export const servicesQuery = groq`
-  *[_type == "service"] {
+  *[_type == "service"] | order(order asc, _createdAt desc) {
     "id": _id,
     title,
     "slug": slug.current,
     shortDescription,
     icon,
     "mainImage": mainImage.asset->url,
-    "mainImageAlt": mainImage.alt
+    "mainImageAlt": mainImage.alt,
+    showOnHome,
+    order
   }
 `;
 
