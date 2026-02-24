@@ -1,10 +1,12 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { sanityFetch } from "@/sanity/lib/client";
 import { servicesQuery } from "@/sanity/lib/queries";
 import { Service } from "@/types";
 import { Container } from "@/components/ui/Container";
+import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ServiceCard } from "@/components/sections/ServiceCard";
-import { services as mockServices } from "@/data/mockData";
 
 export async function ServicesSection() {
   const services = await sanityFetch<Service[]>({ query: servicesQuery, tags: ["service"] });
@@ -22,10 +24,15 @@ export async function ServicesSection() {
           title="Hizmetlerimiz"
           subtitle="Profesyonel Çözümler"
         />
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-12">
           {displayServices.slice(0, 6).map((service) => (
             <ServiceCard key={service.id} service={service} />
           ))}
+        </div>
+        <div className="text-center">
+            <Button asChild size="lg" variant="outline" className="rounded-full px-8">
+                <Link href="/hizmetler" className="gap-2">Tüm Hizmetleri Gör <ArrowRight size={16}/></Link>
+            </Button>
         </div>
       </Container>
     </section>
