@@ -14,6 +14,7 @@ export interface Service {
   icon?: string;
   mainImage: string;
   mainImageAlt?: string;
+  gallery?: { url: string; alt?: string }[];
   content?: string; // HTML content for detail page
   category?: Category;
 }

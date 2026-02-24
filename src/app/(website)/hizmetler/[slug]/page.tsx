@@ -13,6 +13,7 @@ import { services as mockServices } from "@/data/mockData";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PageHero } from "@/components/layout/PageHero";
 import { ServiceSidebar } from "@/components/layout/ServiceSidebar";
+import { ServiceGallery } from "@/components/ui/ServiceGallery";
 
 interface ServiceDetailPageProps {
   params: Promise<{
@@ -80,22 +81,21 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
         <div className="grid lg:grid-cols-12 gap-12">
             {/* Main Content */}
             <div className="lg:col-span-8 space-y-8">
-                {/* Main Image */}
-                <div className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-xl bg-muted">
-                    {displayService.mainImage ? (
-                        <Image
-                            src={displayService.mainImage}
-                            alt={displayService.mainImageAlt || displayService.title}
-                            fill
-                            className="object-cover"
-                            priority
-                        />
-                    ) : (
+                {/* Main Image / Gallery */}
+                {displayService.mainImage ? (
+                    <ServiceGallery 
+                        images={[
+                            { url: displayService.mainImage, alt: displayService.mainImageAlt || displayService.title },
+                            ...(displayService.gallery || [])
+                        ]} 
+                    />
+                ) : (
+                    <div className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-xl bg-muted">
                         <div className="absolute inset-0 flex items-center justify-center bg-primary/5">
                             <h1 className="text-3xl md:text-5xl font-bold font-serif text-primary leading-tight text-center px-4">{displayService.title}</h1>
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
 
                 {/* Content */}
                 <div>

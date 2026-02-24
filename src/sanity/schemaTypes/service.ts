@@ -48,6 +48,26 @@ export const service = defineType({
       ],
     }),
     defineField({
+      name: "gallery",
+      title: "Gallery Images",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+          fields: [
+            {
+              name: "alt",
+              type: "string",
+              title: "Alternative text",
+              description: "Required for accessibility and SEO.",
+            },
+          ],
+        },
+      ],
+      description: "Additional images for the service gallery",
+    }),
+    defineField({
       name: "content",
       title: "Content",
       type: "array",
