@@ -50,6 +50,7 @@ export default async function WebsiteLayout({
       <FloatingContact 
         phone={companyInfo?.contact?.phone} 
         whatsapp={companyInfo?.contact?.whatsapp} 
+        instagram={companyInfo?.contact?.socials?.instagram}
       />
     </>
   );
