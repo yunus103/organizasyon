@@ -8,6 +8,7 @@ export interface Category {
 
 export interface Service {
   id: string;
+  _id?: string;
   title: string;
   slug: string;
   shortDescription: string;
@@ -29,6 +30,7 @@ export interface Project {
   coverImageAlt?: string;
   images?: string[];
   description: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   details?: any; // Portable Text
   services?: Service[];
   date?: string;
@@ -63,6 +65,7 @@ export interface CompanyInfo {
   };
   aboutImage?: string;
   aboutImageAlt?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   aboutContent?: any;
   logo?: string;
   logoAlt?: string;

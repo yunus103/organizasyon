@@ -8,7 +8,7 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectCard } from "@/components/sections/ProjectCard";
-import { projects as mockProjects } from "@/data/mockData";
+
 
 export async function ProjectsSection() {
   const projects = await sanityFetch<Project[]>({ query: projectsQuery, tags: ["project"] });

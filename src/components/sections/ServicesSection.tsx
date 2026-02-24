@@ -7,12 +7,12 @@ import { ServiceCard } from "@/components/sections/ServiceCard";
 import { services as mockServices } from "@/data/mockData";
 
 export async function ServicesSection() {
-  const services = await sanityFetch<any[]>({ query: servicesQuery, tags: ["service"] });
+  const services = await sanityFetch<Service[]>({ query: servicesQuery, tags: ["service"] });
   
   if (services.length === 0) return null;
   
   // Filter for homepage if marked, otherwise just show top 6
-  const featuredServices = services.filter((s: any) => s.showOnHome);
+  const featuredServices = services.filter((s) => (s as Service & { showOnHome?: boolean }).showOnHome);
   const displayServices = featuredServices.length > 0 ? featuredServices : services.slice(0, 6);
   
   return (

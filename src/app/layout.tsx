@@ -13,8 +13,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Sanity Admin",
-  description: "Sanity Studio",
+  title: "Organizasyon",
+  description: "Organizasyon Web Sitesi",
 };
 
 export default function RootLayout({

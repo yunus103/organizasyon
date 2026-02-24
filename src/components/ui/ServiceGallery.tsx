@@ -34,9 +34,14 @@ export function ServiceGallery({ images }: ServiceGalleryProps) {
 
   useEffect(() => {
     if (!mainApi) return;
-    onSelect();
+    
+    // Defer the initial selection to avoid setting state during render
+    const raf = requestAnimationFrame(() => onSelect());
+    
     mainApi.on("select", onSelect);
     mainApi.on("reInit", onSelect);
+    
+    return () => cancelAnimationFrame(raf);
   }, [mainApi, onSelect]);
 
   const scrollPrev = useCallback(() => {

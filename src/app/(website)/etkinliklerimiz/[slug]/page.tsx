@@ -5,7 +5,7 @@ import { ArrowLeft, Calendar, MapPin } from "lucide-react";
 
 import { sanityFetch } from "@/sanity/lib/client";
 import { projectBySlugQuery, projectsQuery } from "@/sanity/lib/queries";
-import { Project } from "@/types";
+import { Project, Service } from "@/types";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { projects as mockProjects } from "@/data/mockData";
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: ProjectDetailPageProps) {
 
 // Helper to render portable text
 import { PortableText } from "next-sanity";
-import { ServiceSidebar } from "@/components/layout/ServiceSidebar";
+
 
 // Fetch other projects for sidebar
 async function getOtherProjects(currentId: string) {
@@ -153,7 +153,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                         <div className="pt-8 border-t border-muted">
                             <h3 className="text-xl font-bold font-serif mb-4">İlgili Hizmetimiz</h3>
                             <div className="flex flex-wrap gap-4">
-                                {displayProject.services.map((service: any) => (
+                                {displayProject.services.map((service: Service) => (
                                     <Button key={service._id} asChild className="space-x-2">
                                         <Link href={`/hizmetler/${service.slug}`}>
                                             <span>{service.title} Hizmetini İncele</span>

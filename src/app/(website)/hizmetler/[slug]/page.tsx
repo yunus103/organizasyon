@@ -1,16 +1,14 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+
 import { PortableText } from "next-sanity";
 
 import { sanityFetch } from "@/sanity/lib/client";
 import { serviceBySlugQuery, servicesQuery } from "@/sanity/lib/queries";
 import { Service } from "@/types";
 import { Container } from "@/components/ui/Container";
-import { Button } from "@/components/ui/Button";
+
 import { services as mockServices } from "@/data/mockData";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+
 import { PageHero } from "@/components/layout/PageHero";
 import { ServiceSidebar } from "@/components/layout/ServiceSidebar";
 import { ServiceGallery } from "@/components/ui/ServiceGallery";
@@ -106,7 +104,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
                             <div dangerouslySetInnerHTML={{ __html: displayService.content }} />
                         ) : (
                             <PortableText 
-                                // @ts-ignore - simple fallback for portable text typing
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                 value={displayService.content as any} 
                                 components={{
                                     block: {

@@ -4,7 +4,7 @@ import { CompanyInfo, Service } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Linkedin, Twitter, Mail, Phone, MapPin } from "lucide-react";
-import { cn } from "@/lib/utils";
+
 
 import { Container } from "@/components/ui/Container";
 import { navItems } from "@/data/mockData";

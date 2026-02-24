@@ -7,7 +7,7 @@ import { Loader2 } from "lucide-react";
 import { Service, Category } from "@/types";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { Button } from "@/components/ui/Button";
-import { Container } from "@/components/ui/Container";
+
 import { getServicesAction } from "@/app/actions";
 import { cn } from "@/lib/utils";
 
@@ -24,7 +24,7 @@ export function ServicesFeed({ initialServices, categories }: ServicesFeedProps)
   const [hasMore, setHasMore] = useState(initialServices.length >= ITEMS_PER_PAGE);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   const handleCategoryChange = async (slug: string) => {
     setActiveCategory(slug);

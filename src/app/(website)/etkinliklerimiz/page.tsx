@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectCard } from "@/components/sections/ProjectCard";
 import { PageHero } from "@/components/layout/PageHero";
-import { projects as mockProjects } from "@/data/mockData";
+
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

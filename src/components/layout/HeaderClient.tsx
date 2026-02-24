@@ -32,9 +32,12 @@ export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: Co
   }, []);
 
   useEffect(() => {
-    setIsOpen(false);
-    setIsServicesOpen(false);
-    setMobileServicesOpen(false);
+    const raf = requestAnimationFrame(() => {
+      setIsOpen(false);
+      setIsServicesOpen(false);
+      setMobileServicesOpen(false);
+    });
+    return () => cancelAnimationFrame(raf);
   }, [pathname]);
 
   const isHomePage = pathname === "/";
