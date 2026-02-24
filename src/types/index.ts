@@ -52,6 +52,7 @@ export interface CompanyInfo {
     whatsapp?: string;
     email: string;
     address: string;
+    googleMapsEmbed?: string;
     socials: {
       facebook?: string;
       instagram?: string;

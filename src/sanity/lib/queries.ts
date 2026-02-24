@@ -11,6 +11,7 @@ export const companyInfoQuery = groq`
       whatsapp,
       email,
       address,
+      googleMapsEmbed,
       socials {
         facebook,
         instagram,

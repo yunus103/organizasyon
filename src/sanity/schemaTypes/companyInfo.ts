@@ -57,6 +57,15 @@ export const companyInfo = defineType({
             }),
           ],
         }),
+        defineField({
+          name: "googleMapsEmbed",
+          title: "Google Maps Embed URL",
+          description:
+            "Pasta the value inside the `src` attribute of the Google Maps embed iframe here.",
+          type: "url",
+          validation: (Rule) =>
+            Rule.uri({ scheme: ["http", "https"], allowRelative: true }),
+        }),
       ],
     }),
     defineField({
