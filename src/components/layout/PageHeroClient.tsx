@@ -1,0 +1,130 @@
+"use client";
+
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { ChevronRight, Home } from "lucide-react";
+import { Container } from "@/components/ui/Container";
+
+interface Breadcrumb {
+  label: string;
+  href?: string;
+}
+
+interface PageHeroClientProps {
+  title: string;
+  breadcrumbs: Breadcrumb[];
+  backgroundImage?: string;
+  backgroundImageAlt?: string;
+}
+
+export function PageHeroClient({ title, breadcrumbs, backgroundImage, backgroundImageAlt }: PageHeroClientProps) {
+  return (
+    <section className="relative min-h-[320px] lg:min-h-[400px] flex items-center overflow-hidden bg-primary pt-26 pb-6">
+      {/* Background Layer */}
+      <div className="absolute inset-0 z-0">
+        {backgroundImage ? (
+          <>
+            <Image
+              src={backgroundImage}
+              alt={backgroundImageAlt || `Background for ${title}`}
+              fill
+              priority
+              className="object-cover object-center"
+            />
+            {/* Adding a simple dark overlay to ensure text is readable while keeping image visible */}
+            <div className="absolute inset-0 bg-black/50" />
+          </>
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-[#0a0a0b]" />
+            
+            {/* Animated Gradient Orbs for a "Live" feel */}
+            <motion.div 
+                animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.5, 0.3],
+                    x: [0, 50, 0],
+                    y: [0, 30, 0]
+                }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-[-20%] left-[-10%] w-[60%] h-[80%] rounded-full bg-secondary/30 blur-[120px]"
+            />
+            <motion.div 
+                animate={{ 
+                    scale: [1, 1.3, 1],
+                    opacity: [0.2, 0.4, 0.2],
+                    x: [0, -40, 0],
+                    y: [0, -20, 0]
+                }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[70%] rounded-full bg-primary-light/20 blur-[100px]"
+            />
+            
+            {/* Main Mesh Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-secondary/5 opacity-90" />
+            
+            {/* Grain/Texture for premium feel */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+          </>
+        )}
+      </div>
+
+      <Container className="relative z-10 w-full">
+        <div className="flex flex-col gap-10 pt-8">
+          {/* Title Area */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-4xl"
+          >
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight leading-[1.15] md:leading-[1.1]">
+              {title}
+            </h1>
+          </motion.div>
+
+          {/* Breadcrumbs Pill */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="self-start"
+          >
+            <nav className="inline-flex bg-white/10 backdrop-blur-md px-4 py-2 md:px-6 md:py-3 rounded-2xl border border-white/20 shadow-2xl">
+              <ul className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[10px] md:text-[11px] font-bold tracking-widest uppercase">
+                <li>
+                  <Link href="/" className="text-white/70 hover:text-white transition-colors flex items-center gap-1.5 group">
+                    <Home size={12} className="group-hover:scale-110 transition-transform" />
+                    <span>Anasayfa</span>
+                  </Link>
+                </li>
+                
+                {breadcrumbs.map((crumb, index) => (
+                  <React.Fragment key={index}>
+                    <li className="text-white/40">
+                      <ChevronRight size={10} />
+                    </li>
+                    <li className="max-w-[200px] sm:max-w-[400px] md:max-w-none">
+                      {crumb.href ? (
+                        <Link 
+                          href={crumb.href} 
+                          className="text-white/70 hover:text-white transition-colors"
+                        >
+                          {crumb.label}
+                        </Link>
+                      ) : (
+                        <span className="text-white border-b-2 border-secondary pb-0.5">{crumb.label}</span>
+                      )}
+                    </li>
+                  </React.Fragment>
+                ))}
+              </ul>
+            </nav>
+          </motion.div>
+        </div>
+      </Container>
+    </section>
+  );
+}

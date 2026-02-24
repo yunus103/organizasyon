@@ -22,7 +22,9 @@ export const companyInfoQuery = groq`
     "aboutImageAlt": aboutImage.alt,
     aboutContent,
     "logo": logo.asset->url,
-    "logoAlt": logo.alt
+    "logoAlt": logo.alt,
+    "pageHeroImage": pageHeroImage.asset->url,
+    "pageHeroImageAlt": pageHeroImage.alt
   }
 `;
 

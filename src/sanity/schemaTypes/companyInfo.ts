@@ -91,5 +91,20 @@ export const companyInfo = defineType({
         },
       ],
     }),
+    defineField({
+      name: "pageHeroImage",
+      title: "Page Hero Background Image",
+      type: "image",
+      description:
+        "Best size for responsive behavior: 1920x600 pixels or similar widescreen aspect ratio. Center your main visual elements.",
+      options: { hotspot: true },
+      fields: [
+        {
+          name: "alt",
+          type: "string",
+          title: "Alternative Text",
+        },
+      ],
+    }),
   ],
 });
