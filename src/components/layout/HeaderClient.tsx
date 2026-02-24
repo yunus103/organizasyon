@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/Button";
 import { navItems } from "@/data/mockData";
 import { cn } from "@/lib/utils";
 import { MegaMenu } from "@/components/layout/MegaMenu";
+import { ContactModal } from "@/components/ui/ContactModal";
 
 export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: CompanyInfo, categories?: Category[] }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,6 +20,7 @@ export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: Co
   const [isServicesOpen, setIsServicesOpen] = useState(false); // For Desktop Mega Menu
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false); // For Mobile Accordion
   const [mobileActiveCategory, setMobileActiveCategory] = useState<string | null>(null);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -159,7 +161,7 @@ export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: Co
             );
           })}
           <Button 
-            asChild 
+            onClick={() => setIsContactModalOpen(true)}
             className={cn(
                "transition-all duration-500 rounded-full px-6",
                shouldShowSolid 
@@ -167,7 +169,7 @@ export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: Co
                 : "bg-secondary hover:bg-secondary/90 text-white shadow-lg border-none"
             )}
           >
-             <Link href="/iletisim">TEKLİF ALIN</Link>
+             TEKLİF ALIN
           </Button>
         </nav>
 
@@ -291,8 +293,14 @@ export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: Co
         </nav>
         
         <div className="mt-12 space-y-8 pb-10">
-          <Button asChild className="w-full py-7 text-lg rounded-xl bg-secondary">
-            <Link href="/iletisim">Teklif Alın</Link>
+          <Button 
+            onClick={() => {
+              setIsOpen(false);
+              setIsContactModalOpen(true);
+            }} 
+            className="w-full py-7 text-lg rounded-xl bg-secondary hover:bg-secondary/90 text-white"
+          >
+            Teklif Alın
           </Button>
           
           <div className="space-y-4 pt-4 border-t border-muted">
@@ -325,6 +333,11 @@ export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: Co
         </div>
       </div>
     </header>
+    
+    <ContactModal 
+      isOpen={isContactModalOpen} 
+      onClose={() => setIsContactModalOpen(false)} 
+    />
     </>
   );
 }
