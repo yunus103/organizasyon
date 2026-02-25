@@ -44,14 +44,14 @@ export async function POST(req: Request) {
     // Revalidate based on tags
     // For general collection updates
     if (_type) {
-      revalidateTag(_type);
+      revalidateTag(_type, { expire: 0 });
       console.log(`Revalidated tag: ${_type}`);
     }
 
     // For specific document updates based on slug
     if (_type && slug?.current) {
       const itemTag = `${_type}:${slug.current}`;
-      revalidateTag(itemTag);
+      revalidateTag(itemTag, { expire: 0 });
       console.log(`Revalidated tag: ${itemTag}`);
     }
 
