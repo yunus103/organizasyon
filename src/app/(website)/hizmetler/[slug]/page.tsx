@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: ServiceDetailPageProps) {
   if (!service) return { title: "Hizmet Bulunamadı" };
   
   return {
-    title: `${service.title} | Reel Organizasyon`,
+    title: `${service.title} | Nilay Organizasyon`,
     description: service.shortDescription,
   };
 }

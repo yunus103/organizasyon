@@ -4,7 +4,7 @@ export const companyInfo: CompanyInfo = {
   name: "Organizasyon",
   tagline: "Siz Hayal Edin, Biz Gerçekleştirelim!",
   description:
-    "Reel Organizasyon; düğün, nişan, kurumsal etkinlikler, mezuniyet törenleri ve özel günler için yaratıcı, profesyonel ve eksiksiz organizasyon hizmeti sunar.",
+    "Nilay Organizasyon; düğün, nişan, kurumsal etkinlikler, mezuniyet törenleri ve özel günler için yaratıcı, profesyonel ve eksiksiz organizasyon hizmeti sunar.",
   contact: {
     phone: "0555 555 5555",
     email: "info@organizasyon.com",
@@ -57,7 +57,7 @@ export const services: Service[] = [
         <li>Fotoğraf ve Video Çekimi</li>
         <li>Düğün Pastası ve Tatlı Büfesi</li>
       </ul>
-      <p>Reel Organizasyon olarak, çiftlerimizin isteklerini dinliyor ve onlara özel konseptler hazırlıyoruz.</p>
+      <p>Nilay Organizasyon olarak, çiftlerimizin isteklerini dinliyor ve onlara özel konseptler hazırlıyoruz.</p>
     `,
   },
   {

@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: ProjectDetailPageProps) {
   if (!project) return { title: "Proje Bulunamadı" };
   
   return {
-    title: `${project.title} | Reel Organizasyon`,
+    title: `${project.title} | Nilay Organizasyon`,
     description: project.description,
   };
 }
