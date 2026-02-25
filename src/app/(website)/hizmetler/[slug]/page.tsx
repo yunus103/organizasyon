@@ -83,7 +83,12 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
                 {displayService.mainImage ? (
                     <ServiceGallery 
                         images={[
-                            { url: displayService.mainImage, alt: displayService.mainImageAlt || displayService.title },
+                            { 
+                              url: displayService.mainImage, 
+                              alt: displayService.mainImageAlt || displayService.title,
+                              fit: displayService.mainImageFit,
+                              position: displayService.mainImagePosition
+                            },
                             ...(displayService.gallery || [])
                         ]} 
                     />

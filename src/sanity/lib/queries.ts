@@ -66,9 +66,13 @@ export const serviceBySlugQuery = groq`
     icon,
     "mainImage": mainImage.asset->url,
     "mainImageAlt": mainImage.alt,
+    "mainImageFit": mainImage.objectFit,
+    "mainImagePosition": mainImage.objectPosition,
     "gallery": gallery[] {
       "url": asset->url,
-      alt
+      alt,
+      "fit": objectFit,
+      "position": objectPosition
     },
     content
   }
