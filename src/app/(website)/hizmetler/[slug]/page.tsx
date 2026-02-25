@@ -66,8 +66,28 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
     notFound();
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nilayorganizasyon.com";
+  
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: displayService.title,
+    description: displayService.shortDescription,
+    provider: {
+      "@type": "Organization",
+      name: "Nilay Organizasyon",
+      url: baseUrl,
+    },
+    url: `${baseUrl}/hizmetler/${displayService.slug}`,
+    image: displayService.mainImage,
+  };
+
   return (
     <article className="pb-16 md:pb-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <PageHero 
         title={displayService.title} 
         breadcrumbs={[

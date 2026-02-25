@@ -16,7 +16,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = companyInfo?.description || "";
   const logo = companyInfo?.logo;
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nilayorganizasyon.com";
+
   return {
+    metadataBase: new URL(baseUrl),
     title: {
       default: tagline ? `${name} | ${tagline}` : name,
       template: `%s | ${name}`,
@@ -42,8 +45,39 @@ export default async function WebsiteLayout({
     tags: ["companyInfo"] 
   });
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nilayorganizasyon.com";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: companyInfo?.name || "Nilay Organizasyon",
+    url: baseUrl,
+    logo: companyInfo?.logo,
+    description: companyInfo?.description,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: companyInfo?.contact?.address,
+      addressCountry: "TR",
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: companyInfo?.contact?.phone,
+      contactType: "customer service",
+    },
+    sameAs: [
+      companyInfo?.contact?.socials?.instagram,
+      companyInfo?.contact?.socials?.facebook,
+      companyInfo?.contact?.socials?.twitter,
+      companyInfo?.contact?.socials?.linkedin,
+    ].filter(Boolean),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
       <main className="min-h-screen">{children}</main>
       <Footer />

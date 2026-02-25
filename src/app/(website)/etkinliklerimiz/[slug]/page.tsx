@@ -82,8 +82,40 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
      otherProjects = mockProjects.filter(p => p.slug !== slug).slice(0, 5);
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nilayorganizasyon.com";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: displayProject.title,
+    startDate: displayProject.date ? new Date(displayProject.date).toISOString() : "",
+    endDate: displayProject.date ? new Date(displayProject.date).toISOString() : "",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    eventStatus: "https://schema.org/EventScheduled",
+    location: {
+      "@type": "Place",
+      name: displayProject.location || "İstanbul",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: displayProject.location || "İstanbul",
+        addressCountry: "TR",
+      },
+    },
+    image: displayProject.coverImage ? [displayProject.coverImage] : [],
+    description: displayProject.description,
+    organizer: {
+      "@type": "Organization",
+      name: "Nilay Organizasyon",
+      url: baseUrl,
+    },
+  };
+
   return (
     <article className="pb-16 md:pb-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <PageHero 
         title={displayProject.title} 
         breadcrumbs={[
