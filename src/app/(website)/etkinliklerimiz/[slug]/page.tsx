@@ -139,15 +139,32 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             <div className="grid lg:grid-cols-3 gap-12">
                 {/* Main Content */}
                 <div className="lg:col-span-2 space-y-8">
-                     <div className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-primary prose-p:text-gray-600 prose-a:text-secondary hover:prose-a:text-primary transition-colors">
-                        <p className="lead text-xl font-medium text-primary/80 mb-8">{displayProject.description}</p>
-                        
-                        {/* Render Rich Text if available */}
+                    {/* Brief description as lead text */}
+                    {displayProject.description && (
+                         <div className="border-b pb-8">
+                            <p className="text-xl font-medium text-primary/80 leading-relaxed">
+                                {displayProject.description}
+                            </p>
+                         </div>
+                    )}
+                    
+                    {/* Detailed Content */}
+                    <div className="prose prose-lg max-w-none text-gray-600 prose-headings:font-serif prose-headings:text-primary prose-a:text-secondary">
                         {displayProject.details && (
-                            <PortableText value={displayProject.details} />
+                            <PortableText 
+                                value={displayProject.details} 
+                                components={{
+                                    block: {
+                                        h1: ({children}) => <h2 className="text-3xl md:text-4xl font-bold font-serif text-primary mt-12 mb-6 block">{children}</h2>,
+                                        h2: ({children}) => <h2 className="text-2xl md:text-3xl font-bold font-serif text-primary mt-10 mb-5 block">{children}</h2>,
+                                        h3: ({children}) => <h3 className="text-xl md:text-2xl font-bold font-serif text-primary mt-8 mb-4 block">{children}</h3>,
+                                        h4: ({children}) => <h4 className="text-lg md:text-xl font-bold font-serif text-primary mt-6 mb-3 block">{children}</h4>,
+                                        normal: ({children}) => <p className="mb-4 leading-relaxed block">{children}</p>,
+                                    }
+                                }}
+                            />
                         )}
-                     </div>
-
+                    </div>
                     {/* Linked Services Button */}
                     {displayProject.services && displayProject.services.length > 0 && (
                         <div className="pt-8 border-t border-muted">
