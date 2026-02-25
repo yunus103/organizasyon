@@ -15,14 +15,7 @@ export interface Service {
   icon?: string;
   mainImage: string;
   mainImageAlt?: string;
-  mainImageFit?: "cover" | "contain";
-  mainImagePosition?: string;
-  gallery?: {
-    url: string;
-    alt?: string;
-    fit?: "cover" | "contain";
-    position?: string;
-  }[];
+  gallery?: { url: string; alt?: string }[];
   content?: string; // HTML content for detail page
   category?: Category;
 }

@@ -45,44 +45,6 @@ export const service = defineType({
           title: "Alternative Text",
           description: "Required for accessibility and SEO.",
         },
-        {
-          name: "objectFit",
-          title: "Görsel Sığdırma (Fit)",
-          type: "string",
-          options: {
-            list: [
-              {
-                title:
-                  "Doldur (Cover) - Alanı doldurur, kenarlardan kesebilir.",
-                value: "cover",
-              },
-              {
-                title:
-                  "Sığdır (Contain) - Tamamı görünür, kenarlarda boşluk bırakabilir.",
-                value: "contain",
-              },
-            ],
-            layout: "radio",
-          },
-          initialValue: "cover",
-        },
-        {
-          name: "objectPosition",
-          title: "Görsel Hizalama (Position)",
-          type: "string",
-          options: {
-            list: [
-              { title: "Merkez (Center)", value: "center" },
-              { title: "Üst (Top)", value: "top" },
-              { title: "Alt (Bottom)", value: "bottom" },
-              { title: "Sol (Left)", value: "left" },
-              { title: "Sağ (Right)", value: "right" },
-            ],
-          },
-          initialValue: "center",
-          description:
-            "Görsel kesilirken hangi kısmının öncelikli olarak görüneceğini belirler (örneğin 'cover' ile).",
-        },
       ],
     }),
     defineField({
@@ -99,44 +61,6 @@ export const service = defineType({
               type: "string",
               title: "Alternative text",
               description: "Required for accessibility and SEO.",
-            },
-            {
-              name: "objectFit",
-              title: "Görsel Sığdırma (Fit)",
-              type: "string",
-              options: {
-                list: [
-                  {
-                    title:
-                      "Doldur (Cover) - Alanı doldurur, kenarlardan kesebilir.",
-                    value: "cover",
-                  },
-                  {
-                    title:
-                      "Sığdır (Contain) - Tamamı görünür, kenarlarda boşluk bırakabilir.",
-                    value: "contain",
-                  },
-                ],
-                layout: "radio",
-              },
-              initialValue: "cover",
-            },
-            {
-              name: "objectPosition",
-              title: "Görsel Hizalama (Position)",
-              type: "string",
-              options: {
-                list: [
-                  { title: "Merkez (Center)", value: "center" },
-                  { title: "Üst (Top)", value: "top" },
-                  { title: "Alt (Bottom)", value: "bottom" },
-                  { title: "Sol (Left)", value: "left" },
-                  { title: "Sağ (Right)", value: "right" },
-                ],
-              },
-              initialValue: "center",
-              description:
-                "Görsel kesilirken hangi kısmının öncelikli olarak görüneceğini belirler.",
             },
           ],
         },

@@ -83,12 +83,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
                 {displayService.mainImage ? (
                     <ServiceGallery 
                         images={[
-                            { 
-                              url: displayService.mainImage, 
-                              alt: displayService.mainImageAlt || displayService.title,
-                              fit: displayService.mainImageFit,
-                              position: displayService.mainImagePosition
-                            },
+                            { url: displayService.mainImage, alt: displayService.mainImageAlt || displayService.title },
                             ...(displayService.gallery || [])
                         ]} 
                     />
@@ -111,6 +106,26 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
                             <PortableText 
                                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                 value={displayService.content as any} 
+                                components={{
+                                    block: {
+                                        h1: ({children}) => <h1 className="text-3xl font-bold font-serif text-primary mt-8 mb-4">{children}</h1>,
+                                        h2: ({children}) => <h2 className="text-2xl font-bold font-serif text-primary mt-8 mb-4">{children}</h2>,
+                                        h3: ({children}) => <h3 className="text-xl font-bold font-serif text-primary mt-6 mb-3">{children}</h3>,
+                                        normal: ({children}) => <p className="mb-4 leading-relaxed">{children}</p>,
+                                    },
+                                    list: {
+                                        bullet: ({children}) => <ul className="list-disc pl-5 mb-4 space-y-2">{children}</ul>,
+                                        number: ({children}) => <ol className="list-decimal pl-5 mb-4 space-y-2">{children}</ol>,
+                                    },
+                                    marks: {
+                                        strong: ({children}) => <strong className="font-bold text-primary">{children}</strong>,
+                                        link: ({children, value}) => (
+                                            <a href={value?.href} target="_blank" rel="noopener noreferrer" className="text-secondary hover:underline font-medium">
+                                                {children}
+                                            </a>
+                                        ),
+                                    }
+                                }}
                             />
                         )}
                     </div>
