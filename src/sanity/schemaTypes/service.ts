@@ -78,6 +78,72 @@ export const service = defineType({
         {
           type: "image",
           options: { hotspot: true },
+          fields: [
+            {
+              name: "alt",
+              type: "string",
+              title: "Alternative Text",
+              description: "Important for SEO and accessibility.",
+            },
+            {
+              name: "position",
+              type: "string",
+              title: "Image Position",
+              description:
+                "Choose where the image should be placed relative to text. Left and Right will float the image.",
+              options: {
+                list: [
+                  { title: "Left", value: "left" },
+                  { title: "Center", value: "center" },
+                  { title: "Right", value: "right" },
+                ],
+                layout: "radio",
+              },
+              initialValue: "center",
+            },
+            {
+              name: "size",
+              type: "string",
+              title: "Image Size",
+              description: "Choose the size of the image.",
+              options: {
+                list: [
+                  { title: "Small (33%)", value: "small" },
+                  { title: "Medium (50%)", value: "medium" },
+                  { title: "Large (100%)", value: "large" },
+                ],
+                layout: "radio",
+              },
+              initialValue: "large",
+            },
+          ],
+        },
+        {
+          type: "object",
+          name: "customHtml",
+          title: "Özel HTML Kodu (Tablo vb.)",
+          fields: [
+            {
+              name: "htmlCode",
+              title: "HTML Kodu",
+              description:
+                "Örneğin başka bir siteden kopyaladığınız tablo kodunu (<table>...</table>) buraya yapıştırabilirsiniz.",
+              type: "text",
+            },
+          ],
+          preview: {
+            select: {
+              title: "htmlCode",
+            },
+            prepare(selection: any) {
+              return {
+                title: "Özel HTML / Etiket",
+                subtitle: selection.title
+                  ? selection.title.substring(0, 50) + "..."
+                  : "Boş",
+              };
+            },
+          },
         },
       ],
     }),

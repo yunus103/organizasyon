@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Calendar, MapPin } from "lucide-react";
 
 import { sanityFetch } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 import { projectBySlugQuery, projectsQuery } from "@/sanity/lib/queries";
 import { Project, Service } from "@/types";
 import { Container } from "@/components/ui/Container";
@@ -176,7 +177,62 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                         
                         {/* Render Rich Text if available */}
                         {displayProject.details && (
-                            <PortableText value={displayProject.details} />
+                            <PortableText 
+                                value={displayProject.details} 
+                                components={{
+                                    types: {
+                                        image: ({ value }: any) => {
+                                            if (!value?.asset?._ref) {
+                                                return null;
+                                            }
+                                            
+                                            const { alt = 'Görsel', position = 'center', size = 'large' } = value;
+                                            
+                                            let alignClass = 'mx-auto';
+                                            let widthClass = 'w-full';
+                                            let wrapClass = 'my-8';
+                                            
+                                            if (position === 'left') {
+                                                alignClass = 'lg:float-left lg:mr-8 mb-6';
+                                                wrapClass = '';
+                                            } else if (position === 'right') {
+                                                alignClass = 'lg:float-right lg:ml-8 mb-6';
+                                                wrapClass = '';
+                                            }
+                                            
+                                            if (size === 'small') {
+                                                widthClass = 'w-full lg:w-1/3';
+                                            } else if (size === 'medium') {
+                                                widthClass = 'w-full lg:w-1/2';
+                                            } else {
+                                                widthClass = 'w-full';
+                                                alignClass = 'mx-auto'; // Force center for large
+                                                wrapClass = 'my-8';
+                                            }
+                                            
+                                            const imgUrl = urlFor(value).url();
+                                            
+                                            return (
+                                                <div className={`${alignClass} ${widthClass} ${wrapClass} relative z-10 clear-none`}>
+                                                    <div className="relative aspect-video rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-800">
+                                                        <Image
+                                                            src={imgUrl}
+                                                            alt={alt}
+                                                            fill
+                                                            className="object-cover transition-transform duration-500 hover:scale-105"
+                                                            sizes="(max-width: 1024px) 100vw, 50vw"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            );
+                                        },
+                                        customHtml: ({ value }: any) => {
+                                            if (!value?.htmlCode) return null;
+                                            return <div className="clear-none overflow-x-auto w-full" dangerouslySetInnerHTML={{ __html: value.htmlCode }} />;
+                                        }
+                                    }
+                                }}
+                            />
                         )}
                      </div>
 
