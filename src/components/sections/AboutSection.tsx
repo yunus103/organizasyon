@@ -71,9 +71,6 @@ export async function AboutSection({ showLink = true }: { showLink?: boolean }) 
             <div className="space-y-8">
                 <div>
                     <h2 className="text-secondary font-bold tracking-widest uppercase text-sm mb-3">Hakkımızda</h2>
-                    <h3 className="text-4xl md:text-5xl font-serif font-bold text-primary leading-tight mb-6">
-                        {tagline || "Hayallerinizi Gerçeğe Dönüştürüyoruz"}
-                    </h3>
                     <div className="h-1 w-20 bg-secondary rounded-full" />
                 </div>
                 
