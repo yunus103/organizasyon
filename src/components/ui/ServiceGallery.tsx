@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ServiceGalleryProps {
-  images: { url: string; alt?: string }[];
+  images: { url: string; alt?: string; fit?: "cover" | "contain"; position?: string }[];
 }
 
 export function ServiceGallery({ images }: ServiceGalleryProps) {
@@ -69,7 +69,8 @@ export function ServiceGallery({ images }: ServiceGalleryProps) {
                   src={img.url}
                   alt={img.alt || `Service image ${index + 1}`}
                   fill
-                  className="object-cover"
+                  className={cn("transition-all duration-300", img.fit === "contain" ? "object-contain" : "object-cover")}
+                  style={{ objectPosition: img.position || "center" }}
                   priority={index === 0}
                   sizes="(max-width: 1024px) 100vw, 66vw"
                 />
@@ -118,6 +119,7 @@ export function ServiceGallery({ images }: ServiceGalleryProps) {
                   alt={`Thumbnail ${index + 1}`}
                   fill
                   className="object-cover"
+                  style={{ objectPosition: img.position || "center" }}
                   sizes="(max-width: 768px) 30vw, (max-width: 1200px) 20vw, 15vw"
                 />
               </div>
