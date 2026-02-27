@@ -16,8 +16,8 @@ export default async function Home() {
   return (
     <>
       <HeroSection slides={slides} />
-      <AboutSection />
       <ServicesSection />
+      <AboutSection />
       <ProjectsSection />
       <ContactSection />
     </>
