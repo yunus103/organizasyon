@@ -12,8 +12,8 @@ interface ServiceSidebarProps {
 }
 
 export function ServiceSidebar({ services, currentSlug }: ServiceSidebarProps) {
-  // Sort services alphabetically or by any other logic if needed
-  const sortedServices = [...services].sort((a, b) => a.title.localeCompare(b.title));
+  // Use `services` directly since they're already sorted correctly from Sanity (order asc)
+  const sortedServices = services;
 
   return (
     <div className="space-y-8">

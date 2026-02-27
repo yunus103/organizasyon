@@ -134,7 +134,7 @@ export const categoriesQuery = groq`
     title,
     "slug": slug.current,
     description,
-    "services": *[_type == "service" && references(^._id)] {
+    "services": *[_type == "service" && references(^._id)] | order(order asc, _createdAt desc) {
       "id": _id,
       title,
       "slug": slug.current,
