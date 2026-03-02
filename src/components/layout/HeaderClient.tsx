@@ -54,8 +54,8 @@ export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: Co
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500",
         shouldShowSolid 
-          ? "bg-white/95 backdrop-blur-md shadow-lg py-2 lg:py-1" 
-          : "bg-transparent py-4 lg:py-2"
+          ? "bg-white/95 backdrop-blur-md shadow-lg py-4 lg:py-3" 
+          : "bg-transparent py-6 lg:py-5"
       )}
       onMouseLeave={() => setIsServicesOpen(false)}
     >
@@ -109,28 +109,20 @@ export function HeaderClient({ companyInfo, categories = [] }: { companyInfo: Co
           href="/" 
           className="flex items-center gap-2 group z-50 relative"
         >
-          {companyInfo?.logo ? (
-             <div className="relative h-14 w-52 md:h-16 md:w-64 lg:h-24 lg:w-80 transition-all duration-300">
-                <Image 
-                   src={companyInfo.logo} 
-                   alt={companyInfo.logoAlt || name} 
-                   fill 
-                   className={cn(
-                     "object-contain object-left transition-all duration-500",
-                     !shouldShowSolid && !isOpen && "brightness-0 invert opacity-90"
-                   )}
-                   sizes="(max-width: 768px) 208px, (max-width: 1024px) 256px, 320px"
-                   priority
-                />
-             </div>
-          ) : (
+          <div className="flex flex-col items-start justify-center gap-0.5 relative z-50">
             <span className={cn(
-              "text-2xl md:text-3xl font-bold font-serif tracking-tighter transition-colors duration-500",
+              "text-3xl md:text-4xl font-bold font-serif tracking-tight leading-none transition-colors duration-500",
               shouldShowSolid ? "text-primary" : "text-white"
             )}>
-              {name.toUpperCase()}
+              NİLAY
             </span>
-          )}
+            <span className={cn(
+              "text-xs md:text-sm font-semibold tracking-[0.2em] md:tracking-[0.25em] uppercase leading-none transition-colors duration-500",
+              shouldShowSolid ? "text-secondary" : "text-white/90"
+            )}>
+              Organizasyon
+            </span>
+          </div>
         </Link>
         
         <nav className="hidden lg:flex items-center gap-8">

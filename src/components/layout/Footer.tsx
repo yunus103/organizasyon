@@ -28,21 +28,14 @@ export async function Footer() {
         {/* Brand Column */}
         <div className="space-y-6 lg:col-span-4">
           <Link href="/" className="inline-block relative z-10 w-full">
-            {companyInfo?.logo ? (
-                 <div className="relative h-28 md:h-36 lg:h-44 w-full max-w-[400px] transition-all duration-300">
-                    <Image 
-                       src={companyInfo.logo} 
-                       alt={companyInfo.logoAlt || name} 
-                       fill 
-                       className="object-contain object-left brightness-0 invert opacity-90"
-                       sizes="(max-width: 768px) 288px, (max-width: 1024px) 320px, 400px"
-                    />
-                 </div>
-              ) : (
-                <span className="text-2xl font-bold font-serif text-white">
-                  {name}
-                </span>
-              )}
+          <div className="flex flex-col items-start justify-center gap-1 mb-4 w-full">
+            <span className="text-4xl md:text-5xl font-bold font-serif tracking-tight leading-none text-white">
+              NİLAY
+            </span>
+            <span className="text-xs md:text-sm font-medium tracking-[0.3em] uppercase leading-none text-secondary">
+              Organizasyon
+            </span>
+          </div>
           </Link>
           <p className="text-gray-300 text-sm max-w-xs block">
             {description}
