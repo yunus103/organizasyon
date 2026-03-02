@@ -63,7 +63,7 @@ export function HeroSection({ slides = [] }: HeroSectionProps) {
               <div className="relative z-10 h-full flex items-center">
                 <Container>
                   <div className="max-w-3xl space-y-6 animate-in fade-in slide-in-from-left-8 duration-1000">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/90 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/90 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4 mt-4">
                       <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
