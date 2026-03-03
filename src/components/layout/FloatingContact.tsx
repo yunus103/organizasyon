@@ -2,7 +2,6 @@
 
 import { Phone, Instagram } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
 
 interface FloatingContactProps {
   phone?: string;
@@ -11,23 +10,7 @@ interface FloatingContactProps {
 }
 
 export function FloatingContact({ phone, whatsapp, instagram }: FloatingContactProps) {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const toggleVisibility = () => {
-      // Show on scroll or always show on mobile if preferred. We'll leave the scroll logic as is.
-      if (window.scrollY > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
-
-    window.addEventListener("scroll", toggleVisibility);
-    // Initial check
-    toggleVisibility();
-    return () => window.removeEventListener("scroll", toggleVisibility);
-  }, []);
+  const isVisible = true;
 
   if (!phone && !whatsapp && !instagram) return null;
 

@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useCallback } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
@@ -16,17 +15,9 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ slides = [] }: HeroSectionProps) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 5000, stopOnInteraction: false }),
   ]);
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
 
   if (slides.length === 0) return null;
 
@@ -98,24 +89,6 @@ export function HeroSection({ slides = [] }: HeroSectionProps) {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Navigation Buttons - More subtle and modern */}
-      <div className="absolute bottom-8 right-4 md:bottom-12 md:right-12 z-20 flex gap-2 md:gap-4">
-        <button
-          onClick={scrollPrev}
-          className="p-2 md:p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-all backdrop-blur-md border border-white/10 hover:border-white/30"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
-        </button>
-        <button
-          onClick={scrollNext}
-          className="p-2 md:p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-all backdrop-blur-md border border-white/10 hover:border-white/30"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
-        </button>
       </div>
     </section>
   );
