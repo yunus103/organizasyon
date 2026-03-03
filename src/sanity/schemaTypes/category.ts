@@ -27,5 +27,12 @@ export const category = defineType({
       type: "text",
       rows: 3,
     }),
+    defineField({
+      name: "order",
+      title: "Order",
+      type: "number",
+      description: "Display order (lower numbers come first)",
+      initialValue: 0,
+    }),
   ],
 });

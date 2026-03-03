@@ -3,6 +3,7 @@ export interface Category {
   title: string;
   slug: string;
   description?: string;
+  order?: number;
   services?: Service[];
 }
 
