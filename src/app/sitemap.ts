@@ -1,16 +1,17 @@
 import { MetadataRoute } from "next";
 import { sanityFetch } from "@/sanity/lib/client";
-import { projectsQuery, servicesQuery } from "@/sanity/lib/queries";
-import { Project, Service } from "@/types";
+import { projectsQuery, servicesQuery, postsQuery } from "@/sanity/lib/queries";
+import { Project, Service, Post } from "@/types";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.nilayorganizasyon.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch dynamic routes
-  const [services, projects] = await Promise.all([
+  const [services, projects, posts] = await Promise.all([
     sanityFetch<Service[]>({ query: servicesQuery, tags: ["service"] }),
     sanityFetch<Project[]>({ query: projectsQuery, tags: ["project"] }),
+    sanityFetch<Post[]>({ query: postsQuery, tags: ["post"] }),
   ]);
 
   const serviceUrls = services.map((service) => ({
@@ -25,6 +26,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: project.date ? new Date(project.date) : new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.6,
+  }));
+
+  const postUrls = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: post.publishedAt ? new Date(post.publishedAt) : new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
   }));
 
   const staticUrls = [
@@ -53,6 +61,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/iletisim`,
       lastModified: new Date(),
       changeFrequency: "yearly" as const,
@@ -60,5 +74,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  return [...staticUrls, ...serviceUrls, ...projectUrls];
+  return [...staticUrls, ...serviceUrls, ...projectUrls, ...postUrls];
 }

@@ -172,5 +172,6 @@ export const navItems = [
   { label: "Kurumsal", href: "/hakkimizda" },
   { label: "Hizmetler", href: "/hizmetler" },
   { label: "Etkinliklerimiz", href: "/etkinliklerimiz" },
+  { label: "Blog", href: "/blog" },
   { label: "İletişim", href: "/iletisim" },
 ];

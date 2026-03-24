@@ -95,3 +95,17 @@ export interface HeroSlide {
   ctaText: string;
   ctaLink: string;
 }
+
+export interface Post {
+  id: string;
+  title: string;
+  slug: string;
+  publishedAt: string;
+  excerpt: string;
+  mainImage?: string;
+  mainImageAlt?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  body?: any; // Portable Text
+  seoTitle?: string;
+  seoDescription?: string;
+}

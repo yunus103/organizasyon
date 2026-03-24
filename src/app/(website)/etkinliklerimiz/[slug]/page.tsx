@@ -200,21 +200,39 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                                                 wrapClass = '';
                                             }
                                             
-                                            if (size === 'small') {
+                                            if (size === 'tiny') {
+                                                widthClass = 'w-full lg:w-1/4';
+                                            } else if (size === 'small') {
                                                 widthClass = 'w-full lg:w-1/3';
                                             } else if (size === 'medium') {
                                                 widthClass = 'w-full lg:w-1/2';
+                                            } else if (size === 'large') {
+                                                widthClass = 'w-full lg:w-2/3';
+                                            } else if (size === 'xlarge') {
+                                                widthClass = 'w-full lg:w-3/4';
                                             } else {
                                                 widthClass = 'w-full';
-                                                alignClass = 'mx-auto'; // Force center for large
+                                                alignClass = 'mx-auto';
                                                 wrapClass = 'my-8';
                                             }
                                             
                                             const imgUrl = urlFor(value).url();
+
+                                            // Extract dimensions from Sanity asset ref (format: image-id-WIDTHxHEIGHT-format)
+                                            const dimensions = value.asset._ref.split("-")[2].split("x");
+                                            const imgWidth = parseInt(dimensions[0]);
+                                            const imgHeight = parseInt(dimensions[1]);
                                             
                                             return (
                                                 <div className={`${alignClass} ${widthClass} ${wrapClass} relative z-10 clear-none`}>
-                                                    <div className="relative aspect-video rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-800">
+                                                    <div 
+                                                        className="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-800"
+                                                        style={{ 
+                                                            aspectRatio: `${imgWidth} / ${imgHeight}`,
+                                                            maxHeight: '75vh',
+                                                            margin: position === 'center' ? '0 auto' : undefined
+                                                        }}
+                                                    >
                                                         <Image
                                                             src={imgUrl}
                                                             alt={alt}

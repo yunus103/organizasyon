@@ -127,6 +127,38 @@ export const projectBySlugQuery = groq`
   }
 `;
 
+// Blog Posts
+export const postsQuery = groq`
+  *[_type == "post"] | order(publishedAt desc) {
+    "id": _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    excerpt,
+    "mainImage": mainImage.asset->url,
+    "mainImageAlt": mainImage.alt
+  }
+`;
+
+export const postBySlugQuery = groq`
+  *[_type == "post" && slug.current == $slug][0] {
+    "id": _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    excerpt,
+    "mainImage": mainImage.asset->url,
+    "mainImageAlt": mainImage.alt,
+    body,
+    seoTitle,
+    seoDescription
+  }
+`;
+
+export const postSlugsQuery = groq`
+  *[_type == "post"] { "slug": slug.current }
+`;
+
 // Categories with Services (Mega Menu)
 export const categoriesQuery = groq`
   *[_type == "category"] | order(order asc, title desc) {

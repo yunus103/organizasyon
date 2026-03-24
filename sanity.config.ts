@@ -38,6 +38,7 @@ export default defineConfig({
             S.documentTypeListItem("category").title("Categories"),
             S.documentTypeListItem("service").title("Services"),
             S.documentTypeListItem("project").title("Projects"),
+            S.documentTypeListItem("post").title("Blog"),
           ]),
     }),
     // Vision is a tool that lets you query your content with GROQ in the studio
