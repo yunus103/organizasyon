@@ -179,7 +179,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
 
           {/* Main Image */}
           {post.mainImage && (
-            <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden shadow-xl mb-10 border border-gray-100">
+            <div className="relative aspect-[2/1] w-full rounded-2xl overflow-hidden shadow-xl mb-10 border border-gray-100">
               <Image
                 src={post.mainImage}
                 alt={post.mainImageAlt || post.title}

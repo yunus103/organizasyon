@@ -19,7 +19,7 @@ export function PostCard({ post }: PostCardProps) {
   return (
     <article className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1">
       {/* Image */}
-      <Link href={`/${post.slug}`} className="block relative aspect-[16/9] overflow-hidden bg-muted">
+      <Link href={`/${post.slug}`} className="block relative aspect-[2/1] overflow-hidden bg-muted">
         {post.mainImage ? (
           <Image
             src={post.mainImage}

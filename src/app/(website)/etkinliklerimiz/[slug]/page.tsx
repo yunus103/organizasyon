@@ -149,7 +149,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             </div>
 
             {/* Main Image */}
-            <div className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-2xl bg-muted">
+            <div className="relative aspect-[2/1] w-full rounded-2xl overflow-hidden shadow-2xl bg-muted">
                 {displayProject.coverImage ? (
                     <Image
                         src={displayProject.coverImage}
