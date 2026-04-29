@@ -58,6 +58,24 @@ export const post = defineType({
       validation: (Rule) => Rule.required().min(50).max(300),
     }),
     defineField({
+      name: "category",
+      title: "Kategori",
+      type: "reference",
+      to: [{ type: "blogCategory" }],
+      description: "Bu blog yazısının ait olduğu kategori.",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "tags",
+      title: "Etiketler",
+      type: "array",
+      of: [{ type: "string" }],
+      description: "Yazıya ait etiketleri girin (örn: düğün, hazırlık, organizasyon). Enter'a basarak ekleyebilirsiniz.",
+      options: {
+        layout: "tags",
+      },
+    }),
+    defineField({
       name: "body",
       title: "İçerik",
       description: "Blog yazısının ana içeriği. Zengin metin editörü ile düzenleyebilirsiniz.",
@@ -92,9 +110,9 @@ export const post = defineType({
                     name: "href",
                     type: "url",
                     title: "URL",
-                    description: "https:// ile başlamalıdır.",
+                    description: "https:// veya / ile başlayabilir (örn: /iletisim veya https://...)",
                     validation: (Rule: any) =>
-                      Rule.uri({ scheme: ["http", "https", "mailto", "tel"] }),
+                      Rule.uri({ scheme: ["http", "https", "mailto", "tel"], allowRelative: true }),
                   },
                   {
                     name: "openInNewTab",

@@ -1,9 +1,10 @@
 import { sanityFetch } from "@/sanity/lib/client";
-import { postsQuery } from "@/sanity/lib/queries";
-import { Post } from "@/types";
+import { postsQuery, blogCategoriesQuery } from "@/sanity/lib/queries";
+import { Post, BlogCategory } from "@/types";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/layout/PageHero";
-import { PostCard } from "@/components/blog/PostCard";
+import { Suspense } from "react";
+import { BlogListClient } from "@/components/blog/BlogListClient";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,10 +16,16 @@ export const metadata: Metadata = {
 export const revalidate = 3600;
 
 export default async function BlogPage() {
-  const posts = await sanityFetch<Post[]>({
-    query: postsQuery,
-    tags: ["post"],
-  });
+  const [posts, categories] = await Promise.all([
+    sanityFetch<Post[]>({
+      query: postsQuery,
+      tags: ["post", "blogCategory"],
+    }),
+    sanityFetch<BlogCategory[]>({
+      query: blogCategoriesQuery,
+      tags: ["blogCategory"],
+    }),
+  ]);
 
   return (
     <>
@@ -34,18 +41,9 @@ export default async function BlogPage() {
               Organizasyon dünyasından haberler, ilham veren hikâyeler ve faydalı ipuçları.
             </p>
 
-            {posts.length === 0 ? (
-              <div className="text-center py-20 text-muted-foreground">
-                <p className="text-lg">Henüz blog yazısı yok.</p>
-                <p className="text-sm mt-2">Yakında yeni içerikler eklenecek.</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {posts.map((post) => (
-                  <PostCard key={post.id} post={post} />
-                ))}
-              </div>
-            )}
+            <Suspense fallback={<div className="text-center py-20">Yükleniyor...</div>}>
+              <BlogListClient initialPosts={posts} categories={categories} />
+            </Suspense>
           </div>
         </Container>
       </div>

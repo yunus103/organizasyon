@@ -7,6 +7,13 @@ export interface Category {
   services?: Service[];
 }
 
+export interface BlogCategory {
+  id: string;
+  _id?: string;
+  title: string;
+  slug: string;
+}
+
 export interface Service {
   id: string;
   _id?: string;
@@ -108,4 +115,6 @@ export interface Post {
   body?: any; // Portable Text
   seoTitle?: string;
   seoDescription?: string;
+  category?: BlogCategory;
+  tags?: string[];
 }

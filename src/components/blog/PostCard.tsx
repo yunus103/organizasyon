@@ -19,7 +19,7 @@ export function PostCard({ post }: PostCardProps) {
   return (
     <article className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1">
       {/* Image */}
-      <Link href={`/blog/${post.slug}`} className="block relative aspect-[16/9] overflow-hidden bg-muted">
+      <Link href={`/${post.slug}`} className="block relative aspect-[16/9] overflow-hidden bg-muted">
         {post.mainImage ? (
           <Image
             src={post.mainImage}
@@ -37,17 +37,27 @@ export function PostCard({ post }: PostCardProps) {
 
       {/* Content */}
       <div className="flex flex-col flex-1 p-6">
-        {/* Date */}
-        {post.publishedAt && (
-          <div className="flex items-center gap-1.5 text-secondary text-sm font-medium mb-3">
-            <Calendar size={14} />
-            <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
-          </div>
-        )}
+        {/* Meta Info: Category and Date */}
+        <div className="flex flex-wrap items-center gap-3 mb-3">
+          {post.category && (
+            <Link
+              href={`/blog?category=${post.category.slug}`}
+              className="inline-flex items-center px-2.5 py-1 rounded-md bg-secondary/10 text-secondary text-xs font-semibold hover:bg-secondary/20 transition-colors"
+            >
+              {post.category.title}
+            </Link>
+          )}
+          {post.publishedAt && (
+            <div className="flex items-center gap-1.5 text-secondary text-sm font-medium">
+              <Calendar size={14} />
+              <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+            </div>
+          )}
+        </div>
 
         {/* Title */}
         <h2 className="text-xl font-bold font-serif text-primary mb-3 leading-snug group-hover:text-secondary transition-colors duration-200">
-          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+          <Link href={`/${post.slug}`}>{post.title}</Link>
         </h2>
 
         {/* Excerpt */}
@@ -57,7 +67,7 @@ export function PostCard({ post }: PostCardProps) {
 
         {/* CTA */}
         <Link
-          href={`/blog/${post.slug}`}
+          href={`/${post.slug}`}
           className="mt-5 inline-flex items-center gap-2 text-secondary font-semibold text-sm hover:gap-3 transition-all duration-200"
         >
           Devamını Oku

@@ -136,7 +136,13 @@ export const postsQuery = groq`
     publishedAt,
     excerpt,
     "mainImage": mainImage.asset->url,
-    "mainImageAlt": mainImage.alt
+    "mainImageAlt": mainImage.alt,
+    category->{
+      "id": _id,
+      title,
+      "slug": slug.current
+    },
+    tags
   }
 `;
 
@@ -151,12 +157,43 @@ export const postBySlugQuery = groq`
     "mainImageAlt": mainImage.alt,
     body,
     seoTitle,
-    seoDescription
+    seoDescription,
+    category->{
+      "id": _id,
+      title,
+      "slug": slug.current
+    },
+    tags
   }
 `;
 
 export const postSlugsQuery = groq`
   *[_type == "post"] { "slug": slug.current }
+`;
+
+export const blogCategoriesQuery = groq`
+  *[_type == "blogCategory"] | order(title asc) {
+    "id": _id,
+    title,
+    "slug": slug.current
+  }
+`;
+
+export const relatedPostsQuery = groq`
+  *[_type == "post" && references($categoryId) && _id != $currentPostId] | order(publishedAt desc)[0...3] {
+    "id": _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    excerpt,
+    "mainImage": mainImage.asset->url,
+    "mainImageAlt": mainImage.alt,
+    category->{
+      "id": _id,
+      title,
+      "slug": slug.current
+    }
+  }
 `;
 
 // Categories with Services (Mega Menu)

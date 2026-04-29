@@ -89,10 +89,10 @@ export function PageHeroClient({ title, breadcrumbs, backgroundImage, background
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="self-start"
           >
-            <nav className="inline-flex bg-white/10 backdrop-blur-md px-4 py-2 md:px-6 md:py-3 rounded-2xl border border-white/20 shadow-2xl">
+            <nav className="inline-flex bg-white/15 px-4 py-2 md:px-6 md:py-3 rounded-2xl border border-white/20 shadow-2xl">
               <ul className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[10px] md:text-[11px] font-bold tracking-widest uppercase">
                 <li>
                   <Link href="/" className="text-white/70 hover:text-white transition-colors flex items-center gap-1.5 group">

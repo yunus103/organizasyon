@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import { Calendar } from "lucide-react";
@@ -6,10 +7,11 @@ import type { Metadata } from "next";
 
 import { sanityFetch } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
-import { postBySlugQuery, postSlugsQuery, postsQuery } from "@/sanity/lib/queries";
+import { postBySlugQuery, postSlugsQuery, postsQuery, relatedPostsQuery } from "@/sanity/lib/queries";
 import { Post } from "@/types";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/layout/PageHero";
+import { PostCard } from "@/components/blog/PostCard";
 
 interface BlogDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -44,7 +46,7 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
     openGraph: {
       title: post.seoTitle || post.title,
       description: post.seoDescription || post.excerpt,
-      url: `${baseUrl}/blog/${post.slug}`,
+      url: `${baseUrl}/${post.slug}`,
       type: "article",
       publishedTime: post.publishedAt,
       images: post.mainImage
@@ -65,7 +67,7 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
       images: post.mainImage ? [post.mainImage] : undefined,
     },
     alternates: {
-      canonical: `${baseUrl}/blog/${post.slug}`,
+      canonical: `${baseUrl}/${post.slug}`,
     },
   };
 }
@@ -89,6 +91,16 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
 
   if (!post) notFound();
 
+  // Fetch related posts if post has a category
+  let relatedPosts: Post[] = [];
+  if (post.category) {
+    relatedPosts = await sanityFetch<Post[]>({
+      query: relatedPostsQuery,
+      params: { categoryId: post.category._id || post.category.id, currentPostId: post.id },
+      tags: ["post"],
+    });
+  }
+
   const baseUrl =
     process.env.NEXT_PUBLIC_SITE_URL || "https://www.nilayorganizasyon.com";
 
@@ -100,7 +112,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
     description: post.seoDescription || post.excerpt,
     datePublished: post.publishedAt,
     dateModified: post.publishedAt,
-    url: `${baseUrl}/blog/${post.slug}`,
+    url: `${baseUrl}/${post.slug}`,
     image: post.mainImage
       ? {
           "@type": "ImageObject",
@@ -125,7 +137,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${baseUrl}/blog/${post.slug}`,
+      "@id": `${baseUrl}/${post.slug}`,
     },
   };
 
@@ -147,12 +159,23 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
       <Container className="mt-12">
         <div className="max-w-3xl mx-auto">
           {/* Meta info */}
-          {post.publishedAt && (
-            <div className="flex items-center gap-2 text-secondary text-sm font-medium mb-8">
-              <Calendar size={15} />
-              <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
-            </div>
-          )}
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+            {post.category && (
+              <Link
+                href={`/blog?category=${post.category.slug}`}
+                className="inline-flex items-center px-3 py-1.5 rounded-md bg-secondary/10 text-secondary text-sm font-semibold hover:bg-secondary/20 transition-colors"
+              >
+                {post.category.title}
+              </Link>
+            )}
+
+            {post.publishedAt && (
+              <div className="flex items-center gap-2 text-secondary text-sm font-medium">
+                <Calendar size={15} />
+                <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+              </div>
+            )}
+          </div>
 
           {/* Main Image */}
           {post.mainImage && (
@@ -284,7 +307,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
                             src={imgUrl}
                             alt={alt}
                             fill
-                            className="object-cover transition-transform duration-500 hover:scale-105"
+                            className="object-cover"
                             sizes="(max-width: 1024px) 100vw, 50vw"
                           />
                         </div>
@@ -304,6 +327,23 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
               }}
             />
           </div>
+
+          {/* Tags */}
+          {post.tags && post.tags.length > 0 && (
+            <div className="mt-12 pt-8 border-t border-gray-100">
+              <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Etiketler</h3>
+              <div className="flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="inline-flex items-center px-3 py-1 rounded-full bg-gray-50 text-gray-500 text-sm border border-gray-100"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Back Link */}
           <div className="mt-12 pt-8 border-t border-gray-100">
@@ -329,6 +369,22 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
           </div>
         </div>
       </Container>
+
+      {/* Related Posts */}
+      {relatedPosts.length > 0 && (
+        <Container className="mt-20 pt-16 border-t border-gray-100">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold font-serif text-primary mb-10 text-center">
+              Bu Kategorideki Diğer Yazılar
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {relatedPosts.map((relatedPost) => (
+                <PostCard key={relatedPost.id} post={relatedPost} />
+              ))}
+            </div>
+          </div>
+        </Container>
+      )}
     </article>
   );
 }
