@@ -13,6 +13,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/istanbul-dueguen-organizasyon-hizmetleri",
+        destination: "/istanbul-dugun-organizasyon-hizmetleri",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
