@@ -105,10 +105,33 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
     image: displayProject.coverImage ? [displayProject.coverImage] : [],
     description: displayProject.description,
     organizer: {
-      "@type": "Organization",
-      name: "Nilay Organizasyon",
-      url: baseUrl,
+      "@id": `${baseUrl}/#organization`,
     },
+  };
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Ana Sayfa",
+        item: baseUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Etkinliklerimiz",
+        item: `${baseUrl}/etkinliklerimiz`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: displayProject.title,
+        item: `${baseUrl}/etkinliklerimiz/${displayProject.slug}`,
+      },
+    ],
   };
 
   return (
@@ -116,6 +139,10 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
       <PageHero 
         title={displayProject.title} 

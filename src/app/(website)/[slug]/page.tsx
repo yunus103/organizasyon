@@ -122,18 +122,10 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
         }
       : undefined,
     author: {
-      "@type": "Organization",
-      name: "Nilay Organizasyon",
-      url: baseUrl,
+      "@id": `${baseUrl}/#organization`,
     },
     publisher: {
-      "@type": "Organization",
-      name: "Nilay Organizasyon",
-      url: baseUrl,
-      logo: {
-        "@type": "ImageObject",
-        url: `${baseUrl}/logo.png`,
-      },
+      "@id": `${baseUrl}/#organization`,
     },
     mainEntityOfPage: {
       "@type": "WebPage",
@@ -141,11 +133,40 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
     },
   };
 
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Ana Sayfa",
+        item: baseUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Blog",
+        item: `${baseUrl}/blog`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: post.title,
+        item: `${baseUrl}/${post.slug}`,
+      },
+    ],
+  };
+
   return (
     <article className="pb-16 md:pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
 
       <PageHero

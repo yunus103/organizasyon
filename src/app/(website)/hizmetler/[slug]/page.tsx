@@ -76,12 +76,39 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
     name: displayService.title,
     description: displayService.shortDescription,
     provider: {
-      "@type": "Organization",
-      name: "Nilay Organizasyon",
-      url: baseUrl,
+      "@id": `${baseUrl}/#organization`,
+    },
+    areaServed: {
+      "@type": "City",
+      name: "İstanbul"
     },
     url: `${baseUrl}/hizmetler/${displayService.slug}`,
     image: displayService.mainImage,
+  };
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Ana Sayfa",
+        item: baseUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Hizmetler",
+        item: `${baseUrl}/hizmetler`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: displayService.title,
+        item: `${baseUrl}/hizmetler/${displayService.slug}`,
+      },
+    ],
   };
 
   return (
@@ -89,6 +116,10 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
       <PageHero 
         title={displayService.title} 
