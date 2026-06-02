@@ -25,6 +25,9 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${name}`,
     },
     description: description,
+    alternates: {
+      canonical: "/",
+    },
     icons: logo ? {
       icon: logo,
       shortcut: logo,

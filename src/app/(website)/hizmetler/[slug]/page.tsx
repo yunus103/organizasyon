@@ -14,6 +14,7 @@ import { services as mockServices } from "@/data/mockData";
 import { PageHero } from "@/components/layout/PageHero";
 import { ServiceSidebar } from "@/components/layout/ServiceSidebar";
 import { ServiceGallery } from "@/components/ui/ServiceGallery";
+import { SanityImage } from "@/components/ui/SanityImage";
 
 interface ServiceDetailPageProps {
   params: Promise<{
@@ -45,6 +46,9 @@ export async function generateMetadata({ params }: ServiceDetailPageProps) {
   return {
     title: `${service.title} | Nilay Organizasyon`,
     description: service.shortDescription,
+    alternates: {
+      canonical: `/hizmetler/${service.slug}`,
+    },
   };
 }
 
@@ -219,13 +223,22 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
                                                 wrapClass = 'my-8';
                                             }
                                             
-                                            const imgUrl = urlFor(value).url();
-
                                             // Extract dimensions from Sanity asset ref (format: image-id-WIDTHxHEIGHT-format)
-                                            const dimensions = value.asset._ref.split("-")[2].split("x");
-                                            const imgWidth = parseInt(dimensions[0]);
-                                            const imgHeight = parseInt(dimensions[1]);
-
+                                            let imgWidth = 800;
+                                            let imgHeight = 600;
+                                            try {
+                                                const refParts = value.asset._ref.split("-");
+                                                if (refParts.length >= 3) {
+                                                    const dims = refParts[2].split("x");
+                                                    if (dims.length === 2) {
+                                                        imgWidth = parseInt(dims[0]) || 800;
+                                                        imgHeight = parseInt(dims[1]) || 600;
+                                                    }
+                                                }
+                                            } catch (e) {
+                                                console.error("Error parsing dimensions:", e);
+                                            }
+ 
                                             return (
                                                 <div className={`${alignClass} ${widthClass} ${wrapClass} relative z-10 clear-none`}>
                                                     <div 
@@ -236,9 +249,10 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
                                                             margin: position === 'center' ? '0 auto' : undefined
                                                         }}
                                                     >
-                                                        <Image
-                                                            src={imgUrl}
-                                                            alt={alt}
+                                                        <SanityImage
+                                                            image={value}
+                                                            width={imgWidth}
+                                                            height={imgHeight}
                                                             fill
                                                             className="object-cover transition-transform duration-500 hover:scale-105"
                                                             sizes="(max-width: 1024px) 100vw, 50vw"

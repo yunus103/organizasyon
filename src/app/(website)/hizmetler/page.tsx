@@ -9,6 +9,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Hizmetlerimiz",
   description: "Sunduğumuz profesyonel organizasyon hizmetleri.",
+  alternates: {
+    canonical: "/hizmetler",
+  },
 };
 
 // Revalidate every hour

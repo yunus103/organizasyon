@@ -5,6 +5,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Hakkımızda",
   description: "Şirketimiz hakkında detaylı bilgi.",
+  alternates: {
+    canonical: "/hakkimizda",
+  },
 };
 
 export default function AboutPage() {

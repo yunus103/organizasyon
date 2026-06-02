@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Calendar, MapPin } from "lucide-react";
+import { SanityImage } from "@/components/ui/SanityImage";
 
 import { sanityFetch } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
@@ -41,6 +42,9 @@ export async function generateMetadata({ params }: ProjectDetailPageProps) {
   return {
     title: `${project.title} | Nilay Organizasyon`,
     description: project.description,
+    alternates: {
+      canonical: `/etkinliklerimiz/${project.slug}`,
+    },
   };
 }
 
@@ -243,12 +247,21 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                                                 wrapClass = 'my-8';
                                             }
                                             
-                                            const imgUrl = urlFor(value).url();
-
                                             // Extract dimensions from Sanity asset ref (format: image-id-WIDTHxHEIGHT-format)
-                                            const dimensions = value.asset._ref.split("-")[2].split("x");
-                                            const imgWidth = parseInt(dimensions[0]);
-                                            const imgHeight = parseInt(dimensions[1]);
+                                            let imgWidth = 800;
+                                            let imgHeight = 600;
+                                            try {
+                                                const refParts = value.asset._ref.split("-");
+                                                if (refParts.length >= 3) {
+                                                    const dims = refParts[2].split("x");
+                                                    if (dims.length === 2) {
+                                                        imgWidth = parseInt(dims[0]) || 800;
+                                                        imgHeight = parseInt(dims[1]) || 600;
+                                                    }
+                                                }
+                                            } catch (e) {
+                                                console.error("Error parsing dimensions:", e);
+                                            }
                                             
                                             return (
                                                 <div className={`${alignClass} ${widthClass} ${wrapClass} relative z-10 clear-none`}>
@@ -260,9 +273,10 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                                                             margin: position === 'center' ? '0 auto' : undefined
                                                         }}
                                                     >
-                                                        <Image
-                                                            src={imgUrl}
-                                                            alt={alt}
+                                                        <SanityImage
+                                                            image={value}
+                                                            width={imgWidth}
+                                                            height={imgHeight}
                                                             fill
                                                             className="object-cover transition-transform duration-500 hover:scale-105"
                                                             sizes="(max-width: 1024px) 100vw, 50vw"

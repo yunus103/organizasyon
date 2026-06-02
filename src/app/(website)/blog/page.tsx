@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Blog",
   description:
     "Organizasyon dünyasından haberler, ipuçları ve ilhamlar. Nilay Organizasyon Blog.",
+  alternates: {
+    canonical: "/blog",
+  },
 };
 
 export const revalidate = 3600;

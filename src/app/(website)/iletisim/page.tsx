@@ -5,6 +5,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "İletişim",
   description: "Bizimle iletişime geçin.",
+  alternates: {
+    canonical: "/iletisim",
+  },
 };
 
 import { sanityFetch } from "@/sanity/lib/client";

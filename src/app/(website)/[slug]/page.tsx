@@ -12,6 +12,7 @@ import { Post } from "@/types";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/layout/PageHero";
 import { PostCard } from "@/components/blog/PostCard";
+import { SanityImage } from "@/components/ui/SanityImage";
 
 interface BlogDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -284,7 +285,6 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
 
                     let alignClass = "mx-auto";
                     let widthClass = "w-full";
-                    let wrapClass = "my-8";
 
                     if (position === "left") {
                       alignClass = "float-left mr-4 md:mr-8 mb-4";
@@ -307,13 +307,21 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
                       alignClass = "mx-auto block mb-8";
                     }
 
-                    const imgUrl = urlFor(value).url();
-
                     // Extract dimensions from Sanity asset ref (format: image-id-WIDTHxHEIGHT-format)
-                    const dimensions = value.asset._ref.split("-")[2].split("x");
-                    const imgWidth = parseInt(dimensions[0]);
-                    const imgHeight = parseInt(dimensions[1]);
-                    const aspectRatio = imgWidth / imgHeight;
+                    let imgWidth = 800;
+                    let imgHeight = 600;
+                    try {
+                      const refParts = value.asset._ref.split("-");
+                      if (refParts.length >= 3) {
+                        const dims = refParts[2].split("x");
+                        if (dims.length === 2) {
+                          imgWidth = parseInt(dims[0]) || 800;
+                          imgHeight = parseInt(dims[1]) || 600;
+                        }
+                      }
+                    } catch (e) {
+                      console.error("Error parsing image dimensions:", e);
+                    }
 
                     return (
                       <div
@@ -324,9 +332,10 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
                         }}
                       >
                         <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg border border-gray-100">
-                          <Image
-                            src={imgUrl}
-                            alt={alt}
+                          <SanityImage
+                            image={value}
+                            width={imgWidth}
+                            height={imgHeight}
                             fill
                             className="object-cover"
                             sizes="(max-width: 1024px) 100vw, 50vw"

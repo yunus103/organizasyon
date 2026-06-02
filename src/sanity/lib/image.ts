@@ -9,3 +9,16 @@ const builder = createImageUrlBuilder({ projectId: projectId || '', dataset: dat
 export const urlFor = (source: SanityImageSource) => {
   return builder.image(source)
 }
+
+export const urlForImage = (source: SanityImageSource) => {
+  return builder.image(source)
+}
+
+export const getImageLqip = (source: any) => {
+  if (!source) return undefined;
+  try {
+    return builder.image(source).width(20).quality(20).blur(10).url();
+  } catch {
+    return undefined;
+  }
+}

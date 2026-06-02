@@ -11,6 +11,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Etkinliklerimiz",
   description: "Gerçekleştirdiğimiz unutulmaz etkinliklerimiz.",
+  alternates: {
+    canonical: "/etkinliklerimiz",
+  },
 };
 
 export default async function ProjectsPage() {
