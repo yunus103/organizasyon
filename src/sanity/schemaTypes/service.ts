@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { turkishSlugify } from "../lib/slugify";
 
 export const service = defineType({
   name: "service",
@@ -17,6 +18,7 @@ export const service = defineType({
       options: {
         source: "title",
         maxLength: 96,
+        slugify: turkishSlugify,
       },
     }),
     defineField({

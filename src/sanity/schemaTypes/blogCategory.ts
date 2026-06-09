@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { turkishSlugify } from "../lib/slugify";
 
 export const blogCategory = defineType({
   name: "blogCategory",
@@ -19,6 +20,7 @@ export const blogCategory = defineType({
       options: {
         source: "title",
         maxLength: 96,
+        slugify: turkishSlugify,
       },
       validation: (Rule) => Rule.required(),
     }),
