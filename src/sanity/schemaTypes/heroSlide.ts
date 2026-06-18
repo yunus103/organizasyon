@@ -31,6 +31,22 @@ export const heroSlide = defineType({
       ]
     }),
     defineField({
+      name: 'mobileImage',
+      title: 'Mobile Background Image',
+      type: 'image',
+      description: 'Optional. If not provided, the main background image will be used on mobile.',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative Text',
+        }
+      ]
+    }),
+    defineField({
       name: 'ctaText',
       title: 'Button Text',
       type: 'string',

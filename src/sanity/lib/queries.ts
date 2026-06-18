@@ -37,6 +37,8 @@ export const heroSlidesQuery = groq`
     subheadline,
     "image": image.asset->url,
     "imageAlt": image.alt,
+    "mobileImage": mobileImage.asset->url,
+    "mobileImageAlt": mobileImage.alt,
     ctaText,
     ctaLink
   }

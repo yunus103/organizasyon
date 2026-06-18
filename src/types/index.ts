@@ -99,6 +99,8 @@ export interface HeroSlide {
   subheadline: string;
   image: string;
   imageAlt?: string;
+  mobileImage?: string;
+  mobileImageAlt?: string;
   ctaText: string;
   ctaLink: string;
 }

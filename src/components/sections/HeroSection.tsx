@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
@@ -35,14 +34,25 @@ export function HeroSection({ slides = [] }: HeroSectionProps) {
               {/* Background Image */}
               <div className="absolute inset-0 bg-primary">
                 {slide.image ? (
-                   <Image
-                     src={slide.image}
-                     alt={slide.imageAlt || slide.headline || "Event background"}
-                     fill
-                     className="object-cover"
-                     priority={index === 0}
-                     unoptimized={slide.image.startsWith("http")}
-                   />
+                  <picture className="absolute inset-0 block w-full h-full">
+                    {slide.mobileImage && (
+                      <source
+                        media="(max-width: 768px)"
+                        srcSet={slide.mobileImage}
+                      />
+                    )}
+                    <source
+                      media="(min-width: 769px)"
+                      srcSet={slide.image}
+                    />
+                    <img
+                      src={slide.image}
+                      alt={slide.imageAlt || slide.headline || "Event background"}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading={index === 0 ? "eager" : "lazy"}
+                      fetchPriority={index === 0 ? "high" : "auto"}
+                    />
+                  </picture>
                 ) : (
                   <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/80 to-primary/40" />
                 )}
