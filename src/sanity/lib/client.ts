@@ -21,7 +21,7 @@ export async function sanityFetch<QueryResponse>({
 }): Promise<QueryResponse> {
   return client.fetch<QueryResponse>(query, params, {
     next: {
-      revalidate: useCdn ? 3600 : 0, // Dev: 0 (no cache), Prod: 3600
+      revalidate: process.env.NODE_ENV === 'production' ? false : 0,
       tags,
     },
   })
